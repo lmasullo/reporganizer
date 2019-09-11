@@ -10,7 +10,7 @@
 var db = require("../models");
 
 // Require dotenv
-//require('dotenv').config();
+require('dotenv').config();
 // Require Axios
 //const axios = require('axios');
 
