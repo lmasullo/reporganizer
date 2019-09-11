@@ -12,7 +12,7 @@ var db = require("../models");
 // Require dotenv
 require('dotenv').config();
 // Require Axios
-//const axios = require('axios');
+const axios = require('axios');
 
 // Routes
 // =============================================================
@@ -31,40 +31,40 @@ module.exports = function(app) {
     console.log(process.env.GIT_USERNAME);
     
 
-    // axios({
-    //   method: 'post',
-    //   url: url,
-    //   //use env
-    //   auth: {
-    //     username: process.env.GIT_USERNAME,
-    //     password: process.env.GIT_PASSWORD
-    //   },
-    //   data: {
-    //     query: `{
-    //       viewer {
-    //         name
-    //         repositories(first: 100) {
-    //           nodes {
-    //             name, id, url, isPrivate
-    //           }
-    //         }
-    //       }
-    //     }`
-    //   }
+    axios({
+      method: 'post',
+      url: url,
+      //use env
+      auth: {
+        username: process.env.GIT_USERNAME,
+        password: process.env.GIT_PASSWORD
+      },
+      data: {
+        query: `{
+          viewer {
+            name
+            repositories(first: 100) {
+              nodes {
+                name, id, url, isPrivate
+              }
+            }
+          }
+        }`
+      }
       
-    // })
-    // .then(response => {
-    //   // handle success
-    //   console.log(response);
-    //   console.log(response.data);
-    //   console.log(response.data.data.viewer);
-    //   console.log(response.data.data.viewer.repositories.nodes);
-    //   const repos = response.data.data.viewer.repositories.nodes;
-    // })
-    // .catch(error => {
-    //   // handle error
-    //   console.log(error);
-    // })
+    })
+    .then(response => {
+      // handle success
+      console.log(response);
+      console.log(response.data);
+      console.log(response.data.data.viewer);
+      console.log(response.data.data.viewer.repositories.nodes);
+      const repos = response.data.data.viewer.repositories.nodes;
+    })
+    .catch(error => {
+      // handle error
+      console.log(error);
+    })
   });
 
 
