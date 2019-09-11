@@ -20,8 +20,8 @@ $(document).ready(function() {
     url: url,
     //use env
     auth: {
-      username: 'lmasullo',
-      password: 'Laxman27!'
+      username: 'gitUsername',
+      password: 'gitUsername'
     },
     data: {
       query: `{
