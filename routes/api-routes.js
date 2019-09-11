@@ -53,10 +53,10 @@ module.exports = function(app) {
     })
     .then(response => {
       // handle success
-      console.log(response);
-      console.log(response.data);
-      console.log(response.data.data.viewer);
-      console.log(response.data.data.viewer.repositories.nodes);
+      // console.log(response);
+      // console.log(response.data);
+      // console.log(response.data.data.viewer);
+      // console.log(response.data.data.viewer.repositories.nodes);
       const repos = response.data.data.viewer.repositories.nodes;
       res.json(repos);
     })
