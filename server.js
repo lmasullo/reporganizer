@@ -7,9 +7,6 @@
 require('dotenv').config();
 var express = require("express");
 
-//Require axios
-const axios = require("axios");
-
 // Sets up the Express App
 // =============================================================
 var app = express();
