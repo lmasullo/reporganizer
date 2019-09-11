@@ -11,14 +11,12 @@ $(document).ready(function() {
   $(document).on("blur", ".todo-item", cancelEdit);
   $(document).on("submit", "#todo-form", insertTodo);
 
-
-  
-
-
   // This function grabs repos from the api
   function getRepos() {
     $.get("/api/repos", function(data) {
       repos = data;
+      console.log(data);
+      
     });
   }
 
@@ -27,9 +25,6 @@ $(document).ready(function() {
 
   // Get user's repos when page loads
   getRepos();
-
-
-
 
   // Our initial todos array
   var todos = [];

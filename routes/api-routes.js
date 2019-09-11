@@ -9,8 +9,6 @@
 
 var db = require("../models");
 
-// Require dotenv
-require('dotenv').config();
 // Require Axios
 const axios = require('axios');
 
@@ -60,6 +58,7 @@ module.exports = function(app) {
       console.log(response.data.data.viewer);
       console.log(response.data.data.viewer.repositories.nodes);
       const repos = response.data.data.viewer.repositories.nodes;
+      res.json(repos);
     })
     .catch(error => {
       // handle error
