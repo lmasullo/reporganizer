@@ -43,7 +43,7 @@ module.exports = function(app) {
             name
             repositories(first: 100) {
               nodes {
-                name, id, url, isPrivate
+                name, id, url, isPrivate, updatedAt
               }
             }
           }
