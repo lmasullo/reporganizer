@@ -9,7 +9,10 @@
 
 var db = require("../models");
 
-require('dotenv').config();
+// Require dotenv
+//require('dotenv').config();
+// Require Axios
+//const axios = require('axios');
 
 // Routes
 // =============================================================
@@ -24,6 +27,9 @@ module.exports = function(app) {
     // });
     //Get all the user's repos fron GitHub using the graphQL api
     const url = 'https://api.github.com/graphql';
+
+    console.log(process.env.GIT_USERNAME);
+    
 
     // axios({
     //   method: 'post',
