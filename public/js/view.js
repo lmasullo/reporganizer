@@ -11,6 +11,79 @@ $(document).ready(function() {
   $(document).on("blur", ".todo-item", cancelEdit);
   $(document).on("submit", "#todo-form", insertTodo);
 
+
+  //Get all the user's repos fron GitHub using the graphQL api
+  const url = 'https://api.github.com/graphql';
+
+  axios({
+    method: 'post',
+    url: url,
+    //use env
+    auth: {
+      username: 'lmasullo',
+      password: 'Laxman27!'
+    },
+    data: {
+      query: `{
+        viewer {
+          name
+           repositories(first: 100) {
+             nodes {
+               name, id, url, isPrivate
+             }
+           }
+         }
+      }`
+    }
+    
+  })
+  .then(response => {
+    // handle success
+    console.log(response);
+    console.log(response.data);
+    console.log(response.data.data.viewer);
+    console.log(response.data.data.viewer.repositories.nodes);
+    const repos = response.data.data.viewer.repositories.nodes;
+
+    // $("#name").html(response.data.data.viewer.name)
+
+    // const table = $('<table>');
+    // table.attr('class', 'table table-stripe');
+    // const thead = $('<thead>');
+    // thead.attr('class', 'thead-dark');
+    // const tr = $('<tr>');
+    // const th1 = $('<th scope="col">#</th>');
+    // const th2 = $('<th scope="col">Name</th>');
+    // const th3 = $('<th scope="col">Private</th>');
+
+    // tr.append(th1, th2, th3);
+    // thead.append(tr);
+    // table.append(thead);
+
+    // const tbody = $('<tbody>');
+    // const th = $('<th scope="row">');
+    // const td = $('<td>');
+
+    // repos.forEach((element, index) => {
+    //   console.log(element.name);
+    //   const row = $(`
+    //   <tr>
+    //     <td>${index + 1}</td>
+    //     <td><a target="_blank" href="${element.url}">${
+    //     element.name
+    //   }</a></td>
+    //   <td>${element.isPrivate}</td>
+    //   </tr>`);
+    //   tbody.append(row);
+    // });
+    // table.append(tbody);
+    // $('#repoList').append(table);
+  })
+  .catch(error => {
+    // handle error
+    console.log(error);
+  })
+
   // Our initial todos array
   var todos = [];
 
