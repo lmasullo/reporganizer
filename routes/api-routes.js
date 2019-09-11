@@ -9,6 +9,8 @@
 
 var db = require("../models");
 
+require('dotenv').config();
+
 // Routes
 // =============================================================
 module.exports = function(app) {
