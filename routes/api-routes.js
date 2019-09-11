@@ -31,7 +31,7 @@ module.exports = function(app) {
       //use env
       auth: {
         username: process.env.gitUsername,
-        password: process.env.gitUsername
+        password: process.env.gitPassword
       },
       data: {
         query: `{
