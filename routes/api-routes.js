@@ -12,6 +12,54 @@ var db = require("../models");
 // Routes
 // =============================================================
 module.exports = function(app) {
+
+   // GET route for getting all of the repos
+   app.get("/api/repos", function(req, res) {
+    // findAll returns all entries for a table when used with no options
+    // db.Todo.findAll({}).then(function(dbTodo) {
+    //   // We have access to the todos as an argument inside of the callback function
+    //   res.json(dbTodo);
+    // });
+    //Get all the user's repos fron GitHub using the graphQL api
+    const url = 'https://api.github.com/graphql';
+
+    axios({
+      method: 'post',
+      url: url,
+      //use env
+      auth: {
+        username: 'gitUsername',
+        password: 'gitUsername'
+      },
+      data: {
+        query: `{
+          viewer {
+            name
+            repositories(first: 100) {
+              nodes {
+                name, id, url, isPrivate
+              }
+            }
+          }
+        }`
+      }
+      
+    })
+    .then(response => {
+      // handle success
+      console.log(response);
+      console.log(response.data);
+      console.log(response.data.data.viewer);
+      console.log(response.data.data.viewer.repositories.nodes);
+      const repos = response.data.data.viewer.repositories.nodes;
+    })
+    .catch(error => {
+      // handle error
+      console.log(error);
+    })
+  });
+
+
   // GET route for getting all of the todos
   app.get("/api/todos", function(req, res) {
     // findAll returns all entries for a table when used with no options
