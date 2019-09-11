@@ -25,40 +25,40 @@ module.exports = function(app) {
     //Get all the user's repos fron GitHub using the graphQL api
     const url = 'https://api.github.com/graphql';
 
-    axios({
-      method: 'post',
-      url: url,
-      //use env
-      auth: {
-        username: process.env.gitUsername,
-        password: process.env.gitPassword
-      },
-      data: {
-        query: `{
-          viewer {
-            name
-            repositories(first: 100) {
-              nodes {
-                name, id, url, isPrivate
-              }
-            }
-          }
-        }`
-      }
+    // axios({
+    //   method: 'post',
+    //   url: url,
+    //   //use env
+    //   auth: {
+    //     username: process.env.GIT_USERNAME,
+    //     password: process.env.GIT_PASSWORD
+    //   },
+    //   data: {
+    //     query: `{
+    //       viewer {
+    //         name
+    //         repositories(first: 100) {
+    //           nodes {
+    //             name, id, url, isPrivate
+    //           }
+    //         }
+    //       }
+    //     }`
+    //   }
       
-    })
-    .then(response => {
-      // handle success
-      console.log(response);
-      console.log(response.data);
-      console.log(response.data.data.viewer);
-      console.log(response.data.data.viewer.repositories.nodes);
-      const repos = response.data.data.viewer.repositories.nodes;
-    })
-    .catch(error => {
-      // handle error
-      console.log(error);
-    })
+    // })
+    // .then(response => {
+    //   // handle success
+    //   console.log(response);
+    //   console.log(response.data);
+    //   console.log(response.data.data.viewer);
+    //   console.log(response.data.data.viewer.repositories.nodes);
+    //   const repos = response.data.data.viewer.repositories.nodes;
+    // })
+    // .catch(error => {
+    //   // handle error
+    //   console.log(error);
+    // })
   });
 
 
