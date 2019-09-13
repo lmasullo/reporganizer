@@ -17,3 +17,12 @@ input.new-item:focus {
 .edit {
   width: 100%;
 }
+
+.jumbotron-heading {
+  font-family: "en_hollow_tilesregular";
+  font-size: 64px;
+}
+.jumbotron-text {
+  font-family: "kreditfront";
+  font-size: 32px;
+}
