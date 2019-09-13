@@ -1,33 +1,166 @@
 $(document).ready(function() {
   // Getting a reference to the input field where user adds a new todo
-  var $newItemInput = $("input.new-item");
+  const $newItemInput = $('input.new-item');
   // Our new todos will go inside the todoContainer
-  var $todoContainer = $(".todo-container");
+  const $todoContainer = $('.todo-container');
   // Adding event listeners for deleting, editing, and adding todos
-  $(document).on("click", "button.delete", deleteTodo);
-  $(document).on("click", "button.complete", toggleComplete);
-  $(document).on("click", ".todo-item", editTodo);
-  $(document).on("keyup", ".todo-item", finishEdit);
-  $(document).on("blur", ".todo-item", cancelEdit);
-  $(document).on("submit", "#todo-form", insertTodo);
+  $(document).on('click', 'button.delete', deleteTodo);
+  $(document).on('click', 'button.complete', toggleComplete);
+  $(document).on('click', '.todo-item', editTodo);
+  $(document).on('keyup', '.todo-item', finishEdit);
+  $(document).on('blur', '.todo-item', cancelEdit);
+  $(document).on('submit', '#todo-form', insertTodo);
 
-  // This function grabs repos from the api
-  function getRepos() {
-    $.get("/api/repos", function(data) {
-      repos = data;
-      console.log(data);
-      
-    });
-  }
-
-  // Our initial reoos array
-  var repos = [];
+  // Our initial repos array
+  // var repos = [];
+  // var dbRepos = [];
 
   // Get user's repos when page loads
-  getRepos();
+  // getRepos();
+  // getDbRepos();
+
+  // Function to map to just the api repo ids
+  function getJustApiID(item) {
+    const apiID = item.id;
+    return apiID;
+  }
+
+  // Function to map to just the db repo ids
+  function getJustDbID(item) {
+    const dbID = item.repoID;
+    return dbID;
+  }
+
+  // Function to map to get all the info of the different repos
+  function getDiffRepos(item) {
+    const dbID = item.repoID;
+    return dbID;
+  }
+
+  // This function inserts a new repo into our database and then updates the view
+  function insertRepo(difference, api) {
+    console.log('Post a repo');
+
+    // const repo = {
+    //   repoID: '123',
+    //   repoName: 'asdf',
+    //   repoURL: 'asdfddd',
+    //   repoPrivate: 0,
+    //   timestamp: '2019-09-13 16:31:32',
+    // };
+
+    const newRepos = [];
+
+    // Now create an array of objects with the repos we want to add
+    for (let i = 0; i < difference.length; i++) {
+      const repos = api.filter(function(repo) {
+        return repo.id === difference[i];
+      });
+
+      // Gives me an array of objects each time
+      console.log(repos);
+
+      // Create an object to push
+      const objRepo = {
+        repoID: repos[0].id,
+        repoName: repos[0].name,
+        repoURL: repos[0].url,
+        repoPrivate: repos[0].isPrivate,
+        timestamp: repos[0].updatedAt,
+      };
+
+      // Push the object to the array
+      newRepos.push(objRepo);
+    }
+
+    console.log('New Repos', newRepos);
+
+    const repos = { newRepos };
+
+    // $.post('/api/repos', difference, api, getAllRepos);
+    $.post('/api/repos', repos);
+  }
+
+  // Use Async/Await to get the repos from both the api and db so they return at the same time so I can compare
+  async function getAllRepos() {
+    try {
+      console.log('getAllRepos Aysnc/Await has started');
+
+      // Declare the routes
+      // API repos
+      const repoPromise = $.get('/api/repos');
+
+      // db repos
+      const dbRepoPromise = $.get('/api/dbRepos');
+
+      // Wait for both to resolve
+      const [api, db] = await Promise.all([repoPromise, dbRepoPromise]);
+      console.log('API:', api);
+      console.log('DB:', db);
+
+      // Now compare the two
+      // const a1 = ['a', 'b'];
+      // const a2 = ['a', 'b', 'c', 'd'];
+
+      // Get just the API repo ids
+      const apiIDs = api.map(getJustApiID);
+      console.log('Just the apiIDs:', apiIDs);
+
+      // Get just the db repo ids
+      const dbIDs = db.map(getJustDbID);
+      console.log('Just the dbIDs:', dbIDs);
+
+      const difference = apiIDs.filter(x => !dbIDs.includes(x));
+
+      console.log('Difference Array:', difference);
+      console.log(difference.length);
+
+      // const test = { id: 1, text: 'asdfa' };
+
+      // Call the route to insert the repos
+      // $.post('/api/repos', test);
+      insertRepo(difference, api);
+
+      // This function grabs repos from the api
+      // function getRepos() {
+      //   $.get("/api/repos", function(data) {
+      //     repos = data;
+      //     //console.log(data);
+      //     return data;
+      //   });
+      // }
+
+      // This function grabs repos from the db
+      // function getDbRepos() {
+      //   $.get("/api/dbRepos", function(data) {
+      //     dbRepos = data;
+      //     //console.log(data);
+      //     return data;
+      //   });
+      // }
+
+      // const [a, b] = await Promise.all([promise1, promise2]);
+
+      // console.log(`${ a } ${ b }`);
+
+      // fire off three requests and save their promises
+      // const apiPromise = getRepos();
+      // const dbPromise = getDbRepos();
+      // await both promises to come back and destructure the result into their own variables
+      // const [api, db] = await Promise.all([apiPromise, dbPromise]);
+      // console.log(repos, dbRepos); // cool, {...}, {....}
+    } catch (e) {
+      console.error(e); // 💩
+    }
+  }
+
+  // Call the async/await function to get the repos
+  getAllRepos();
+
+  //! **********************************************
 
   // Our initial todos array
-  var todos = [];
+  let todos = [];
 
   // Getting todos from database when page loads
   getTodos();
@@ -35,8 +168,8 @@ $(document).ready(function() {
   // This function resets the todos displayed with new todos from the database
   function initializeRows() {
     $todoContainer.empty();
-    var rowsToAdd = [];
-    for (var i = 0; i < todos.length; i++) {
+    const rowsToAdd = [];
+    for (let i = 0; i < todos.length; i++) {
       rowsToAdd.push(createNewRow(todos[i]));
     }
     $todoContainer.prepend(rowsToAdd);
@@ -44,7 +177,7 @@ $(document).ready(function() {
 
   // This function grabs todos from the database and updates the view
   function getTodos() {
-    $.get("/api/todos", function(data) {
+    $.get('/api/todos', function(data) {
       todos = data;
       initializeRows();
     });
@@ -53,26 +186,36 @@ $(document).ready(function() {
   // This function deletes a todo when the user clicks the delete button
   function deleteTodo(event) {
     event.stopPropagation();
-    var id = $(this).data("id");
+    const id = $(this).data('id');
     $.ajax({
-      method: "DELETE",
-      url: "/api/todos/" + id
+      method: 'DELETE',
+      url: `/api/todos/${id}`,
     }).then(getTodos);
   }
 
   // This function handles showing the input box for a user to edit a todo
   function editTodo() {
-    var currentTodo = $(this).data("todo");
-    $(this).children().hide();
-    $(this).children("input.edit").val(currentTodo.text);
-    $(this).children("input.edit").show();
-    $(this).children("input.edit").focus();
+    const currentTodo = $(this).data('todo');
+    $(this)
+      .children()
+      .hide();
+    $(this)
+      .children('input.edit')
+      .val(currentTodo.text);
+    $(this)
+      .children('input.edit')
+      .show();
+    $(this)
+      .children('input.edit')
+      .focus();
   }
 
   // Toggles complete status
   function toggleComplete(event) {
     event.stopPropagation();
-    var todo = $(this).parent().data("todo");
+    const todo = $(this)
+      .parent()
+      .data('todo');
     todo.complete = !todo.complete;
     updateTodo(todo);
   }
@@ -80,9 +223,12 @@ $(document).ready(function() {
   // This function starts updating a todo in the database if a user hits the "Enter Key"
   // While in edit mode
   function finishEdit(event) {
-    var updatedTodo = $(this).data("todo");
+    const updatedTodo = $(this).data('todo');
     if (event.which === 13) {
-      updatedTodo.text = $(this).children("input").val().trim();
+      updatedTodo.text = $(this)
+        .children('input')
+        .val()
+        .trim();
       $(this).blur();
       updateTodo(updatedTodo);
     }
@@ -91,44 +237,52 @@ $(document).ready(function() {
   // This function updates a todo in our database
   function updateTodo(todo) {
     $.ajax({
-      method: "PUT",
-      url: "/api/todos",
-      data: todo
+      method: 'PUT',
+      url: '/api/todos',
+      data: todo,
     }).then(getTodos);
   }
 
   // This function is called whenever a todo item is in edit mode and loses focus
   // This cancels any edits being made
   function cancelEdit() {
-    var currentTodo = $(this).data("todo");
+    const currentTodo = $(this).data('todo');
     if (currentTodo) {
-      $(this).children().hide();
-      $(this).children("input.edit").val(currentTodo.text);
-      $(this).children("span").show();
-      $(this).children("button").show();
+      $(this)
+        .children()
+        .hide();
+      $(this)
+        .children('input.edit')
+        .val(currentTodo.text);
+      $(this)
+        .children('span')
+        .show();
+      $(this)
+        .children('button')
+        .show();
     }
   }
 
   // This function constructs a todo-item row
   function createNewRow(todo) {
-    var $newInputRow = $(
+    const $newInputRow = $(
       [
         "<li class='list-group-item todo-item'>",
-        "<span>",
+        '<span>',
         todo.text,
-        "</span>",
+        '</span>',
         "<input type='text' class='edit' style='display: none;'>",
         "<button class='delete btn btn-danger'>x</button>",
         "<button class='complete btn btn-primary'>✓</button>",
-        "</li>"
-      ].join("")
+        '</li>',
+      ].join('')
     );
 
-    $newInputRow.find("button.delete").data("id", todo.id);
-    $newInputRow.find("input.edit").css("display", "none");
-    $newInputRow.data("todo", todo);
+    $newInputRow.find('button.delete').data('id', todo.id);
+    $newInputRow.find('input.edit').css('display', 'none');
+    $newInputRow.data('todo', todo);
     if (todo.complete) {
-      $newInputRow.find("span").css("text-decoration", "line-through");
+      $newInputRow.find('span').css('text-decoration', 'line-through');
     }
     return $newInputRow;
   }
@@ -136,12 +290,12 @@ $(document).ready(function() {
   // This function inserts a new todo into our database and then updates the view
   function insertTodo(event) {
     event.preventDefault();
-    var todo = {
+    const todo = {
       text: $newItemInput.val().trim(),
-      complete: false
+      complete: false,
     };
 
-    $.post("/api/todos", todo, getTodos);
-    $newItemInput.val("");
+    $.post('/api/todos', todo, getTodos);
+    $newItemInput.val('');
   }
 });
