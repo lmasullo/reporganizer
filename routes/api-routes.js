@@ -1,4 +1,3 @@
-
 // *********************************************************************************
 // api-routes.js - this file offers a set of routes for displaying and saving data to the db
 // *********************************************************************************
@@ -110,7 +109,7 @@ module.exports = function(app) {
 
     for (let i = 0; i < req.body.newRepos.length; i++) {
       console.log(req.body.newRepos[i].repoID);
-
+      
       db.Repo.create({
         repoID: req.body.newRepos[i].repoID,
         repoName: req.body.newRepos[i].repoName,
@@ -120,6 +119,13 @@ module.exports = function(app) {
       }).then(function(dbRepo) {
         // We have access to the new todo as an argument inside of the callback function
         // res.json(dbRepo);
+        //Need to send back the new db repo
+        db.Repo.findAll({})
+        .then(function(dbRepo) {
+          // We have access to the repos as an argument inside of the callback function
+          res.json(dbRepo);
+        });
+
       });
     }
   });
