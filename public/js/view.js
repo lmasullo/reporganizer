@@ -113,7 +113,7 @@ $(document).ready(function() {
       const difference = apiIDs.filter(x => !dbIDs.includes(x));
 
       console.log('Difference Array:', difference);
-      console.log(difference.length);
+      // console.log(difference.length);
 
       // const test = { id: 1, text: 'asdfa' };
 

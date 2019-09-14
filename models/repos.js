@@ -3,8 +3,8 @@ module.exports = function(sequelize, DataTypes) {
     repoID: DataTypes.STRING,
     repoName: DataTypes.STRING,
     repoURL: DataTypes.STRING,
-    repoPrivate: DataTypes.STRING,
-    timestamp: DataTypes.STRING,
+    repoPrivate: DataTypes.BOOLEAN,
+    timestamp: DataTypes.DATE,
   });
   return Repo;
 };
