@@ -184,7 +184,52 @@ $(document).ready(function() {
     // const rowsToAdd = [];
     for (let i = 0; i < currentRepos.length; i++) {
       //   // rowsToAdd.push(createNewRow(todos[i]));
+
+      // <div className="card" style="width: 18rem;">
+      //   <div className="card-body">
+      //     <h5 className="card-title">Card title</h5>
+      //     <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
+      //     <p className="card-text">
+      //       Some quick example text to build on the card title and make up the
+      //       bulk of the card's content.
+      //     </p>
+      //     <a href="#" className="card-link">
+      //       Card link
+      //     </a>
+      //     <a href="#" className="card-link">
+      //       Another link
+      //     </a>
+      //   </div>
+      // </div>;
+
       console.log(currentRepos[i]);
+
+      const divCard = $('<div>');
+      divCard.addClass('card');
+
+      const divCardBody = $('<div>');
+      divCardBody.addClass('card-body');
+
+      const cardH5 = $('<h5>');
+      cardH5.addClass('card-title');
+      cardH5.html(currentRepos[i].repoName);
+      const cardH6 = $('<h6>');
+      cardH6.addClass('card-subtitle');
+      cardH6.html(currentRepos[i].repoPrivate);
+
+      const cardP = $('<p>');
+      cardP.html(currentRepos[i].timestamp);
+
+      const cardLink = $('<a>');
+      cardLink.attr('href', currentRepos[i].repoURL);
+      cardLink.attr('title');
+      cardLink.text(currentRepos[i].repoName);
+      cardLink.addClass('link');
+
+      divCardBody.append(cardH5, cardH6, cardP, cardLink);
+      divCard.append(divCardBody);
+
+      $('#results').append(divCard);
     }
     // $todoContainer.prepend(rowsToAdd);
   }
