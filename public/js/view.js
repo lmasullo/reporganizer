@@ -202,10 +202,27 @@ $(document).ready(function() {
       //   </div>
       // </div>;
 
+      //       <div class="card" style="width: 18rem;">
+      //   <img src="..." class="card-img-top" alt="...">
+      //   <div class="card-body">
+      //     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      //   </div>
+      // </div>
+
+      // <div className="card-deck"></div>;
+
       console.log(currentRepos[i]);
+
+      const cardDeck = $('<div>');
+      cardDeck.addClass('card-deck');
 
       const divCard = $('<div>');
       divCard.addClass('card');
+      // divCard.css('width', '18rem');
+
+      const cardImg = $('<img>');
+      cardImg.addClass('card-img-top');
+      cardImg.attr('src', '../images/react.png');
 
       const divCardBody = $('<div>');
       divCardBody.addClass('card-body');
@@ -213,23 +230,30 @@ $(document).ready(function() {
       const cardH5 = $('<h5>');
       cardH5.addClass('card-title');
       cardH5.html(currentRepos[i].repoName);
-      const cardH6 = $('<h6>');
-      cardH6.addClass('card-subtitle');
-      cardH6.html(currentRepos[i].repoPrivate);
 
-      const cardP = $('<p>');
-      cardP.html(currentRepos[i].timestamp);
+      // const cardH6 = $('<h6>');
+      // cardH6.addClass('card-subtitle');
+      // cardH6.html(currentRepos[i].repoPrivate);
+
+      const cardPrivate = $('<p>');
+      cardPrivate.html(currentRepos[i].repoPrivate);
+
+      const cardTime = $('<p>');
+      cardTime.html(currentRepos[i].timestamp);
 
       const cardLink = $('<a>');
+      cardLink.addClass('btn btn-primary');
       cardLink.attr('href', currentRepos[i].repoURL);
-      cardLink.attr('title');
-      cardLink.text(currentRepos[i].repoName);
+      cardLink.attr('target', '_blank');
+      cardLink.text('Go to Repo');
       cardLink.addClass('link');
 
-      divCardBody.append(cardH5, cardH6, cardP, cardLink);
-      divCard.append(divCardBody);
+      divCardBody.append(cardH5, cardPrivate, cardTime, cardLink);
+      divCard.append(cardImg, divCardBody);
 
-      $('#results').append(divCard);
+      cardDeck.append(divCard);
+
+      $('#results').append(cardDeck);
     }
     // $todoContainer.prepend(rowsToAdd);
   }
