@@ -78,7 +78,10 @@ $(document).ready(function() {
     const repos = { newRepos };
 
     // $.post('/api/repos', difference, api, getAllRepos);
-    $.post('/api/repos', repos);
+    $.post('/api/repos', repos).then(function(data) {
+      console.log('Data!!!!', data);
+      initializeRows(data);
+    });
   }
 
   // Use Async/Await to get the repos from both the api and db so they return at the same time so I can compare
@@ -119,7 +122,14 @@ $(document).ready(function() {
 
       // Call the route to insert the repos
       // $.post('/api/repos', test);
-      insertRepo(difference, api);
+      if (difference.length !== 0) {
+        insertRepo(difference, api);
+      } else {
+        $.get('/api/dbRepos', function(data) {
+          // repos = data;
+          initializeRows(data);
+        });
+      }
 
       // This function grabs repos from the api
       // function getRepos() {
@@ -166,20 +176,21 @@ $(document).ready(function() {
   getTodos();
 
   // This function resets the todos displayed with new todos from the database
-  function initializeRows() {
-    $todoContainer.empty();
-    const rowsToAdd = [];
-    for (let i = 0; i < todos.length; i++) {
-      rowsToAdd.push(createNewRow(todos[i]));
+  function initializeRows(repos) {
+    // $todoContainer.empty();
+    // const rowsToAdd = [];
+    for (let i = 0; i < repos.length; i++) {
+      //   // rowsToAdd.push(createNewRow(todos[i]));
+      console.log(repos[i]);
     }
-    $todoContainer.prepend(rowsToAdd);
+    // $todoContainer.prepend(rowsToAdd);
   }
 
   // This function grabs todos from the database and updates the view
   function getTodos() {
     $.get('/api/todos', function(data) {
       todos = data;
-      initializeRows();
+      // initializeRows();
     });
   }
 
