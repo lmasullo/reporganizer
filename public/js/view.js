@@ -12,6 +12,7 @@ $(document).ready(function() {
   $(document).on('submit', '#todo-form', insertTodo);
 
   // Our initial repos array
+  let currentRepos = [];
   // var repos = [];
   // var dbRepos = [];
 
@@ -80,7 +81,8 @@ $(document).ready(function() {
     // $.post('/api/repos', difference, api, getAllRepos);
     $.post('/api/repos', repos).then(function(data) {
       console.log('Data!!!!', data);
-      initializeRows(data);
+      currentRepos = data;
+      initializeRows();
     });
   }
 
@@ -127,7 +129,8 @@ $(document).ready(function() {
       } else {
         $.get('/api/dbRepos', function(data) {
           // repos = data;
-          initializeRows(data);
+          currentRepos = data;
+          initializeRows();
         });
       }
 
@@ -176,12 +179,12 @@ $(document).ready(function() {
   getTodos();
 
   // This function resets the todos displayed with new todos from the database
-  function initializeRows(repos) {
+  function initializeRows() {
     // $todoContainer.empty();
     // const rowsToAdd = [];
-    for (let i = 0; i < repos.length; i++) {
+    for (let i = 0; i < currentRepos.length; i++) {
       //   // rowsToAdd.push(createNewRow(todos[i]));
-      console.log(repos[i]);
+      console.log(currentRepos[i]);
     }
     // $todoContainer.prepend(rowsToAdd);
   }
@@ -190,7 +193,7 @@ $(document).ready(function() {
   function getTodos() {
     $.get('/api/todos', function(data) {
       todos = data;
-      // initializeRows();
+      initializeRows();
     });
   }
 
