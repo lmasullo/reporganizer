@@ -71,7 +71,8 @@ anime.timeline({loop: false})
     strokeDashoffset: [offset, 0],
     duration: 200,
     easing: "easeInOutSine"
-  });
+  })
+;
 
 $(".button").click(function() {
   basicTimeline.play();
