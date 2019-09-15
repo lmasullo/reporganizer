@@ -19,31 +19,16 @@ p {
   padding-right: 0.05em;
   padding-bottom: 0.15em;
 }
-​ body {
-  background: rgb(96, 100, 102);
+body {
+  background: rgb(181, 195, 209);
 }
-​ .ml1 .line {
-  opacity: 0;
-  position: absolute;
-  left: 0;
-  height: 3px;
-  width: 100%;
-  background-color: #fff;
-  transform-origin: 0 0;
+main {
+  height: 100vh;
+  width: 100vw;
 }
-​ .ml1 .line1 {
-  top: 0;
-}
-.ml1 .line2 {
-  bottom: 0;
-}
-​ ​ main {
-  height: 80vh;
-  width: 80vw;
-}
-​ .button {
-  font-family: "kreditregular";
-  background: #2b2d2f;
+
+.button {
+  background: #2B2D2F;
   height: 80px;
   width: 200px;
   text-align: center;
@@ -56,17 +41,18 @@ p {
   cursor: pointer;
   border-radius: 4px;
 }
-​ .text {
-  font-family: "kreditfront";
-  font-size: 32px;
-  color: rgb(255, 255, 255);
+
+.text {
+  font: bold 1.25rem/1 poppins;
+  color: #71DFBE;
   position: absolute;
   top: 50%;
   transform: translateY(-52%);
   left: 0;
   right: 0;
 }
-​ .progress-bar {
+
+.progress-bar {
   position: absolute;
   height: 10px;
   width: 0;
@@ -75,9 +61,10 @@ p {
   left: 50%;
   border-radius: 200px;
   transform: translateY(-50%) translateX(-50%);
-  background: lighten(#2b2d2f, 15%);
+  background: lighten(#2B2D2F, 15%);
 }
-​ svg {
+
+svg {
   width: 30px;
   position: absolute;
   top: 50%;
@@ -85,9 +72,10 @@ p {
   left: 50%;
   right: 0;
 }
-​ .check {
+
+.check {
   fill: none;
-  stroke: #ffffff;
+  stroke: #FFFFFF;
   stroke-width: 3;
   stroke-linecap: round;
   stroke-linejoin: round;
@@ -108,12 +96,6 @@ p {
 ​ .edit {
   width: 100%;
 }
-<<<<<<< HEAD
 #results{
   color: #FFFFFF
 }
-=======
-#results {
-  color: #ffffff;
-}
->>>>>>> 74ce45458d7e1c3ac8d559a14a3d4ac4965ebcf5

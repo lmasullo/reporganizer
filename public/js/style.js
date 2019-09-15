@@ -1,12 +1,6 @@
-
 var textWrapper = document.querySelector('.ml1 .letters');
 textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
-<<<<<<< HEAD
 
-=======
-​
-​
->>>>>>> 74ce45458d7e1c3ac8d559a14a3d4ac4965ebcf5
 anime.timeline({loop: false})
   .add({
     targets: '.ml1 .letter',
@@ -25,7 +19,7 @@ anime.timeline({loop: false})
     offset: '-=875',
     delay: (el, i, l) => 80 * (l - i)
   });
-​
+
   var basicTimeline = anime.timeline({
     autoplay: false
   });
@@ -78,11 +72,11 @@ anime.timeline({loop: false})
     easing: "easeInOutSine"
   })
 ;
-​
+
 $(".button").click(function() {
   basicTimeline.play();
 });
-​
+
 $(".text").click(function() {
   basicTimeline.play();
 });
