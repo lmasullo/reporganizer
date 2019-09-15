@@ -1,14 +1,14 @@
 module.exports = function(sequelize, DataTypes) {
-  const RepoTags = sequelize.define('RepoTags', {
+  const RepoTag = sequelize.define('RepoTag', {
     repoID: DataTypes.STRING,
     tagID: DataTypes.STRING,
   });
 
-  RepoTags.associate = function(models) {
-    RepoTags.hasMany(models.Tag, {
+  RepoTag.associate = function(models) {
+    RepoTag.hasMany(models.Tag, {
       onDelete: 'cascade',
     });
   };
 
-  return RepoTags;
+  return RepoTag;
 };
