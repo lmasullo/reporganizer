@@ -10,10 +10,5 @@ module.exports = function(sequelize, DataTypes) {
     });
   };
 
-<<<<<<< HEAD
-  return RepoTags;
-};
-=======
   return RepoTag;
 };
->>>>>>> f62c4bae5711345b56776d72c1560a89c8e133e4

@@ -269,7 +269,6 @@ $(document).ready(function() {
   // Getting todos from database when page loads
   // getTodos();
 
-<<<<<<< HEAD
   // This function resets the todos displayed with new todos from the database
   function initializeRows() {
     // $todoContainer.empty();
@@ -349,9 +348,6 @@ $(document).ready(function() {
     }
     // $todoContainer.prepend(rowsToAdd);
   }
-=======
-  //! ********************************************
->>>>>>> f62c4bae5711345b56776d72c1560a89c8e133e4
 
   // This function grabs todos from the database and updates the view
   // function getTodos() {
