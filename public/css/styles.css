@@ -10,42 +10,24 @@ p {
   display: inline-block;
   line-height: 1em;
   font-family: "kreditfront";
-font-size: 68px;
+  font-size: 68px;
 }
-
-.ml1 .text-wrapper {
+​ .ml1 .text-wrapper {
   position: relative;
   display: inline-block;
   padding-top: 0.1em;
   padding-right: 0.05em;
   padding-bottom: 0.15em;
 }
-
 body {
-  background: rgb(96, 100, 102);
+  background: rgb(181, 195, 209);
 }
-
-.ml1 .line {
-  opacity: 0;
-  position: absolute;
-  left: 0;
-  height: 3px;
-  width: 100%;
-  background-color: #fff;
-  transform-origin: 0 0;
-}
-
-.ml1 .line1 { top: 0; }
-.ml1 .line2 { bottom: 0; }
-
-
 main {
-  height: 80vh;
-  width: 80vw;
+  height: 100vh;
+  width: 100vw;
 }
 
 .button {
-  font-family: "kreditregular";
   background: #2B2D2F;
   height: 80px;
   width: 200px;
@@ -61,9 +43,8 @@ main {
 }
 
 .text {
-  font-family:"kreditfront";
-  font-size: 32px;
-  color: rgb(255, 255, 255);
+  font: bold 1.25rem/1 poppins;
+  color: #71DFBE;
   position: absolute;
   top: 50%;
   transform: translateY(-52%);
@@ -103,18 +84,18 @@ svg {
   margin: 0 auto;
   margin-top: 75px;
 }
-
-input.new-item:focus {
+​ input.new-item:focus {
   outline: none;
 }
-
-.list-group-item > button.delete,
+​ .list-group-item > button.delete,
 .list-group-item > button.complete {
   float: right;
   height: 25px;
   margin-left: 5px;
 }
-
-.edit {
+​ .edit {
   width: 100%;
+}
+#results{
+  color: #FFFFFF
 }
