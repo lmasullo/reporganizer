@@ -109,7 +109,7 @@ module.exports = function(app) {
 
     for (let i = 0; i < req.body.newRepos.length; i++) {
       console.log(req.body.newRepos[i].repoID);
-      
+
       db.Repo.create({
         repoID: req.body.newRepos[i].repoID,
         repoName: req.body.newRepos[i].repoName,
@@ -119,27 +119,83 @@ module.exports = function(app) {
       }).then(function(dbRepo) {
         // We have access to the new todo as an argument inside of the callback function
         // res.json(dbRepo);
-        //Need to send back the new db repo
-        db.Repo.findAll({})
-        .then(function(dbRepo) {
+        // Need to send back the new db repo
+        db.Repo.findAll({}).then(function(dbRepo) {
           // We have access to the repos as an argument inside of the callback function
           res.json(dbRepo);
         });
-
       });
     }
   });
 
   //! **************************************************
 
-  // GET route for getting all of the todos
-  app.get('/api/todos', function(req, res) {
+  // GET route for getting all of the tags
+  app.get('/api/tags', function(req, res) {
+    // Count how many tags
+    db.Tag.count().then(c => {
+      console.log(`There are ${c} tags!`);
+      // If no Tags create the defaults
+      if (c === 0) {
+        db.Tag.bulkCreate([
+          { tagName: 'HTML', tagColor: '#FFE933' },
+          { tagName: 'CSS', tagColor: '#FF6E33' },
+          { tagName: 'Node', tagColor: '#ABA6A5' },
+          { tagName: 'JavaScript', tagColor: '#7E5B6C' },
+          { tagName: 'JQUERY', tagColor: '#9116D8' },
+        ]).then(Tags => {
+          console.log(Tags);
+          res.json(Tags);
+        });
+      } else {
+        db.Tag.findAll({}).then(function(dbTag) {
+          // We have access to the tags as an argument inside of the callback function
+          res.json(dbTag);
+        });
+      }
+    });
+
+    // db.Tag.findOrCreate({
+    //   where: { id: 1 }, // we search for this is
+    //   defaults: [
+    //     { tagName: 'HTML', tagColor: '#FFE933' },
+    //     { tagName: 'CSS', tagColor: '#FF6E33' },
+    //   ],
+    // }).then(function() {
+    //   // We have access to the new todo as an argument inside of the callback function
+    //   // res.json(dbTodo);
+    //   // findAll returns all entries for a table when used with no options
+    //   db.Tag.findAll({}).then(function(dbTag) {
+    //     // We have access to the tags as an argument inside of the callback function
+    //     res.json(dbTag);
+    //   });
+    // });
+  });
+
+  // GET route for getting all of the repo tags
+  app.get('/api/repotags', function(req, res) {
     // findAll returns all entries for a table when used with no options
-    db.Todo.findAll({}).then(function(dbTodo) {
-      // We have access to the todos as an argument inside of the callback function
-      res.json(dbTodo);
+    db.RepoTag.findAll({}).then(function(dbRepoTag) {
+      // We have access to the tags as an argument inside of the callback function
+      res.json(dbRepoTag);
     });
   });
+
+  // POST route for saving a new todo
+  app.post('/api/repotags', function(req, res) {
+    // create takes an argument of an object describing the item we want to
+    // insert into our table. In this case we just we pass in an object with a text
+    // and complete property
+    db.RepoTag.create({
+      repoID: req.body.repoID,
+      tagID: req.body.tagID,
+    }).then(function(dbRepoTag) {
+      // We have access to the new todo as an argument inside of the callback function
+      res.json(dbRepoTag);
+    });
+  });
+
+  //! ******************************************
 
   // POST route for saving a new todo
   app.post('/api/todos', function(req, res) {

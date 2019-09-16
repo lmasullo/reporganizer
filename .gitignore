@@ -59,7 +59,10 @@ typings/
 
 # next.js build output
 .next
+<<<<<<< HEAD
 
 config.json
 
 .env
+=======
+>>>>>>> f62c4bae5711345b56776d72c1560a89c8e133e4
