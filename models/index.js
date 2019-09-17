@@ -38,4 +38,8 @@ Object.keys(db).forEach(function(modelName) {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
+// Table Relationships
+// db.RepoTag.belongsTo(db.Repo);
+// db.Repo.hasMany(db.RepoTag);
+
 module.exports = db;

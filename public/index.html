@@ -25,9 +25,8 @@
       margin: 5px;
     }
 
-    .popover-title .close {
-      position: relative;
-      bottom: 3px;
+    .hide {
+      display: none;
     }
   </style>
 
@@ -41,11 +40,16 @@
       <hr class="my-4" />
       <p>A better way to manage your GitHub repos.</p>
     </div>
+
     <!-- Div to display available tags -->
     <div id="tags"></div>
 
     <!-- Div to display repo cards -->
     <div id="results"></div>
+
+    <!-- Div to hold the tags popup -->
+    <div id="popTags"></div>
+
   </div>
 
   <!-- Optional JavaScript -->
