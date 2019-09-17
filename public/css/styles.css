@@ -108,6 +108,22 @@ p {
 ​ .edit {
   width: 100%;
 }
-#results{
-  color: #FFFFFF
+.results{
+
+  box-sizing: border-box;
+  border: black;
+  height: 300px;
+  width: 200px;
+  display: inline-block;
 }
+.clearfix {
+  overflow: auto;
+}
+.card{
+  margin-left: 10%;
+  display: inline-block;
+}
+/* .container{
+  margin:20px;
+  display: inline-block;
+} */
