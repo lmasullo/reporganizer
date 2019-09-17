@@ -1,3 +1,4 @@
+config.json
 # Logs
 logs
 *.log
@@ -61,7 +62,7 @@ typings/
 .next
 <<<<<<< HEAD
 
-config.json
+
 
 .env
 =======
