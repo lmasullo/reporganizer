@@ -245,21 +245,51 @@ $(document).ready(function() {
   // Call getReptTags to get all the repo tags on load
   getRepoTags();
 
-  $('[data-toggle="popover"]').popover({
-    placement: 'top',
-    html: true,
-    selector: '[rel="popover"]',
-    title:
-      'Choose a Tag <a href="#" class="close" data-dismiss="alert">&times;</a>',
-    content() {
-      return '<a id="btnTemplate" class="btn btn-primary btn-sm" href="#" role="button">HTML</a><a id="btnCustom" class="btn btn-primary btn-sm" href="#" role="button">REACT</a>';
-    },
+  $(document).on('mousedown', 'button[rel=popover]', function() {
+    console.log($('#tags').html());
+
+    // const content = $('.container div:nth-child(2)');
+    // const content = $('.container')
+    // .find('div')
+    // .attr('id', 'tags');
+
+    const content2 = $('<button>REACT</button>');
+
+    $(this)
+      .popover({
+        placement: 'top',
+        container: 'body',
+        html: true,
+        title:
+          'Choose a Tag <a href="#" class="close" data-dismiss="alert">&times;</a>',
+        content: content2,
+      })
+      .click(function(e) {
+        e.preventDefault();
+      });
   });
+
   $(document).on('click', '.popover .close', function() {
     $(this)
       .parents('.popover')
       .popover('hide');
   });
+
+  // $('[data-toggle="popover"]').popover({
+  //   placement: 'top',
+  //   html: true,
+  //   selector: '[rel="popover"]',
+  //   title:
+  //     'Choose a Tag <a href="#" class="close" data-dismiss="alert">&times;</a>',
+  //   content() {
+  //     return '<a id="btnTemplate" class="btn btn-primary btn-sm" href="#" role="button">HTML</a><a id="btnCustom" class="btn btn-primary btn-sm" href="#" role="button">REACT</a>';
+  //   },
+  // });
+  // $(document).on('click', '.popover .close', function() {
+  //   $(this)
+  //     .parents('.popover')
+  //     .popover('hide');
+  // });
 
   //! **********************************************
 
