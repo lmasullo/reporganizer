@@ -66,3 +66,20 @@ p {
   margin:20px;
   display: inline-block;
 } */
+.card {
+  height: 500px;
+}
+
+.card-columns {
+  -webkit-column-count: 4;
+  -moz-column-count: 4;
+  column-count: 4;
+}
+
+.btn {
+  margin: 1px;
+}
+
+/* .hide {
+  display: none;
+} */

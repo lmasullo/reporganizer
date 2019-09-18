@@ -26,8 +26,7 @@ anime
     offset: '-=875',
     delay: (el, i, l) => 80 * (l - i),
   });
-// /stylusanimation///////
-  $('.btn_nav').click(function() {
+$('.btn_nav').click(function() {
   // animate content
   $('.page__style').addClass('animate_content');
   $('.page__description')
@@ -39,7 +38,8 @@ anime
     $('.page__style').removeClass('animate_content');
   }, 3200);
 
-  //remove fadeIn class after 1500ms
+  // remove fadeIn class after 1500ms
+
   setTimeout(function() {
     $('.page__style').removeClass('fadeIn');
   }, 1500);
@@ -52,26 +52,32 @@ $('.home_link').click(function() {
   }, 1500);
 });
 
-$('.projects_link').click(function() {
+$('.html_link').click(function() {
   setTimeout(function() {
-    $('.projects').addClass('fadeIn');
+    $('.html').addClass('fadeIn');
   }, 1500);
 });
 
-$('.skills_link').click(function() {
+$('.css_link').click(function() {
   setTimeout(function() {
-    $('.skills').addClass('fadeIn');
+    $('.css').addClass('fadeIn');
   }, 1500);
 });
 
-$('.about_link').click(function() {
+$('.javascript_link').click(function() {
   setTimeout(function() {
-    $('.about').addClass('fadeIn');
+    $('.javascript').addClass('fadeIn');
   }, 1500);
 });
 
-$('.contact_link').click(function() {
+$('.jquery_link').click(function() {
   setTimeout(function() {
-    $('.contact').addClass('fadeIn');
+    $('.jquery').addClass('fadeIn');
+  }, 1500);
+});
+
+$('.node_link').click(function() {
+  setTimeout(function() {
+    $('.node').addClass('fadeIn');
   }, 1500);
 });
