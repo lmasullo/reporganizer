@@ -16,39 +16,108 @@
       crossorigin="anonymous"
     />
 
-    <style>
-      .card {
-        height: 500px;
-      }
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/lumen/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+  
+  <link rel="stylesheet" href="./styles.css" media="screen" title="no title">
 
-      .card-columns {
-        -webkit-column-count: 4;
-        -moz-column-count: 4;
-        column-count: 4;
-      }
+  <link rel="stylesheet" href="css/fonts/stylesheet.css">
+  <style>
+    /* .card-img-top {
+      width: 100%;
+      height: 15vw;
+      object-fit: cover;
+    } */
+  </style>
+  <title>RepOrganizer</title>
+</head>
 
-      .btn {
-        margin: 5px;
-      }
+<body data-fb-color onload="myFunction()" style="margin:0;">
 
-      .hide {
-        display: none;
-      }
-    </style>
-
-    <title>RepOrganizer</title>
-  </head>
-
-  <body>
-    <div class="container">
-      <div class="jumbotron">
-        <h1 class="display-4">RepOrganizer</h1>
-        <hr class="my-4" />
-        <p>A better way to manage your GitHub repos.</p>
+  <!--//  HTML-->
+  <div class="page__style html">
+    <div class="page__description">
+      <div id="html">
+        <button class="btn_nav home_link">All</button>
+    <h1>html</h1>
       </div>
+    </div>
+  </div>
 
-      <!-- Div to display available tags -->
-      <div id="tags"></div>
+<!--//  CSS-->
+  <div class="page__style css">
+    <div class="page__description">
+      <div id="css">
+        <button class="btn_nav home_link">All</button>
+    <h1>css</h1>
+        
+      </div>
+    </div>
+  </div>
+        
+<!--//  Javascript-->
+  <div class="page__style javascript">
+    <div class="page__description">
+      <div id="javascript">
+      <button class="btn_nav home_link">All</button>
+    <h1>javascript</h1>
+      </div>
+    </div>
+  </div>
+
+<!--//  jQuery-->
+  <div class="page__style jquery">
+    <div class="page__description">
+      <div id="jquery">
+        <button class="btn_nav home_link">All</button>
+      <h1>jQuery</h1>
+  
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--//  Node-->
+  <div class="page__style node">
+    <div class="page__description">
+      <div id="node">
+        <button class="btn_nav home_link">All</button>
+      <h1>Node</h1>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!--//  home-->
+<div class="page__style home">
+  <div class="page__description">
+    <div id="home">
+      <div class="box">
+        
+        <h1 class="ml1">
+          <span class="text-wrapper">
+            <span class="letters">REPORGANIZER</span>
+          </span>
+        </h1>
+       
+      <p>A better way to manage your GitHub repos.</p>
+  
+        <button class="btn_nav html_link">HTML</button>
+        <button class="btn_nav css_link">CSS</button>
+        <button class="btn_nav javascript_link">Javascript</button>
+        <button class="btn_nav jquery_link">jQuery</button>
+        <button class="btn_nav node_link">Node</button>
+      </div>
+      <div id="loader"></div>
+      <!-- <div class="wrap"><span class="circle circle-1"><span class="circle circle-2"><span class="circle circle-3"></span></span>
+      </span>
+  </div> -->
+      <div style= "display:none;" id="myDiv" class="animate-bottom"><div id="results"></div></div>
+  </div>
+</div>
+</div>
 
       <!-- Div to display repo cards -->
       <div id="results"></div>
