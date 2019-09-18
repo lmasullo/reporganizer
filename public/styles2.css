@@ -10,7 +10,6 @@
 }
 .results{
   box-sizing: border-box;
-
   margin: 5%;
   border: black solid 2px;
   height: 200px;
@@ -21,7 +20,7 @@
 .page__style {
   background: #6d326d;
   font-family: OpenSans-Regular, sans-serif;
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;

@@ -26,7 +26,8 @@ anime
     offset: '-=875',
     delay: (el, i, l) => 80 * (l - i),
   });
-$('.btn_nav').click(function() {
+// /stylusanimation///////
+  $('.btn_nav').click(function() {
   // animate content
   $('.page__style').addClass('animate_content');
   $('.page__description')
