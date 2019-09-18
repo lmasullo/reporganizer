@@ -20,6 +20,7 @@
   width: 100%;
   margin: auto auto;
   overflow: scroll;
+
 }
 .page__style .page__description {
   color: #fff;
@@ -30,8 +31,10 @@
   font-weight: 300;
   margin-top: 100px;
   margin-bottom: 30px;
+  font-family: "digital_dreamersregular";
 }
 .page__style .btn_nav {
+  font-family: "digital_dreamersregular";
   background: #e7e7e7;
   border-radius: 30px;
   border: none;
@@ -53,6 +56,7 @@
 .page__style a {
   text-decoration: none;
   color: #fff;
+  font-family: "digital_dreamersregular";
 }
 .page__style a:hover {
   color: #ccc;
@@ -184,14 +188,15 @@
   font-size: 3.5em;
 }
 p {
-  font-family: "hermitregular";
-  font-size: 22px;
+  font-family: "stf_elevatedregular";
+  font-size: 42px;
 }
 .ml1 .letter {
   display: inline-block;
   line-height: 1em;
-  font-family: "blocky_lettersregular";
-  font-size: 68px;
+  font-family: "shadowmanregular";
+  font-size: 88px;
+  text-shadow: 5px black;
 }
 ​ .ml1 .text-wrapper {
   position: relative;
