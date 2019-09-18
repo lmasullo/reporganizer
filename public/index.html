@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   
   <link rel="stylesheet" href="./styles2.css" media="screen" title="no title">
-  <link rel="stylesheet" href="css/fonts/stylesheet.css">
+  <link rel="stylesheet" href="css/fonts2/stylesheet.css">
   <style>
     /* .card-img-top {
       width: 100%;
@@ -22,7 +22,7 @@
   <title>RepOrganizer</title>
 </head>
 
-<body>
+<body onload="myFunction()" style="margin:0;">
 
   <!--//  HTML-->
   <div class="page__style html">
@@ -86,20 +86,20 @@
       <div class="box">
         <h1 class="ml1">
           <span class="text-wrapper">
-            <span class="letters">RepOrganizer</span>
+            <span class="letters">REPORGANIZER</span>
           </span>
         </h1>
        
-      <p>A better way to manage your GitHub repos.</p>        
+      <p>A better way to manage your GitHub repos.</p>
+  
         <button class="btn_nav html_link">HTML</button>
         <button class="btn_nav css_link">CSS</button>
         <button class="btn_nav javascript_link">Javascript</button>
         <button class="btn_nav jquery_link">jQuery</button>
         <button class="btn_nav node_link">Node</button>
       </div>
-
-        <div id="results"></div>
- 
+      <div id="loader"></div>
+      <div style= "display:none;" id="myDiv" class="animate-bottom"><div id="results"></div></div>
   </div>
 </div>
 </div>

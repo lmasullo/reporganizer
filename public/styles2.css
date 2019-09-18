@@ -184,13 +184,13 @@
   font-size: 3.5em;
 }
 p {
-  font-family: "kreditfront";
+  font-family: "hermitregular";
   font-size: 22px;
 }
 .ml1 .letter {
   display: inline-block;
   line-height: 1em;
-  font-family: "kreditfront";
+  font-family: "blocky_lettersregular";
   font-size: 68px;
 }
 ​ .ml1 .text-wrapper {
@@ -222,4 +222,49 @@ p {
 }
 .hide {
   display: none;
+}
+#loader {
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin-left: 45%;
+  margin-right: 50%; 
+  border: 16px solid rgb(255, 255, 255);
+  border-radius: 50%;
+  border-top: 16px solid black; 
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+#myDiv {
+  display: none;
+  text-align: center;
 }
