@@ -27,22 +27,22 @@
 }
 .page__style h1 {
   font-weight: 300;
-  margin-top: 200px;
+  margin-top: 100px;
   margin-bottom: 30px;
 }
 .page__style .btn_nav {
-  background: #002a32;
+  background: #e7e7e7;
   border-radius: 30px;
   border: none;
-  color: #fff;
+  color: rgb(0, 0, 0);
   cursor: pointer;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-bottom: 20px;
-  padding: 17px 30px;
+  padding: 17px 17px;
   width: 146px;
 }
 .page__style .btn_nav:focus,
@@ -57,7 +57,7 @@
   color: #ccc;
 }
 .animate_content {
-  animation: animate 3s ease;
+  animation: animate 1.5s ease;
 }
 .fadeIn {
   z-index: 10;
@@ -70,25 +70,25 @@
 /*  Projects
 -----------------------------------*/
 .html {
-  background: #bd5de9;
+  background: #eeff00;
 }
 /*  Skills
 -----------------------------------*/
 .css {
-  background: #5de974;
+  background: #ffa600;
 }
 /*  About
 -----------------------------------*/
 .javascript {
-  background: #fb9b33;
+  background: #865d03;
 }
 /*  Contact
 -----------------------------------*/
 .jquery {
-  background: #c9cdc0;
+  background: #860065;
 }
 .node {
-  background: #c9cdc0;
+  background: #9c9c9c;
 }
 /*****************************************************************
 ~ Mobile media-queries (max-width: 767px)
