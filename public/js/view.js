@@ -22,10 +22,14 @@ $(document).ready(function() {
   let repoID = 0;
 
   // Initial array to hold the filtered repo tags for each repo
-  const arrFilteredTags = [];
+  // const arrFilteredTags = [];
 
   // This function displays repos from the database
   function initializeRows() {
+    console.log('In Initialize Rows');
+
+    console.log('Repo Tags', repoTags);
+
     // Build the card column element
     const cardCol = $('<div>');
     cardCol.addClass('card-columns');
@@ -58,20 +62,28 @@ $(document).ready(function() {
       // repoTags.filter;
 
       // Get the matching repo tags for this repo
-      const matchingTags = getRepoTags(currentRepos[i].id);
-      console.log('Match', matchingTags);
+      // console.log(currentRepos[i].id);
+
+      const matchingTags = getRepoTags(repoTags, currentRepos[i].id);
+      // console.log('Match', matchingTags);
+      // console.log(matchingTags.length);
 
       if (matchingTags.length > 0) {
         console.log('Match', matchingTags);
+        // console.log(matchingTags[0].tagName);
 
-        // Now build the div to hold the tags
-        const divAssocTags = $('<div>');
-        const btnAssocTag = $('<button>');
-        btnAssocTag.addClass('btn btn-sm');
-        btnAssocTag.css('background-color', matchingTags[0].tagColor);
-        btnAssocTag.text(matchingTags[0].tagName);
-        divAssocTags.append(btnAssocTag);
-        $('.card-body').append(divAssocTags);
+        for (let i = 0; i < matchingTags.length; i++) {
+          // Now build the div to hold the tags
+          // const divAssocTags = $('<div>');
+          const btnAssocTag = $('<button>');
+          btnAssocTag.addClass('btn btn-sm');
+          btnAssocTag.css('background-color', matchingTags[i].tagColor);
+          btnAssocTag.text(matchingTags[i].tagName);
+          // divAssocTags.append(btnAssocTag);
+          divCardBody.append(btnAssocTag);
+        }
+        const hr = $('<hr>');
+        divCardBody.append(hr);
       }
 
       // Use an arrow function
@@ -243,10 +255,20 @@ $(document).ready(function() {
       // db repos
       const dbRepoPromise = $.get('/api/dbRepos');
 
+      // repo Tags repos
+      const dbRepoTagsPromise = $.get('/api/dbRepoTags');
+
       // Wait for both to resolve
-      const [api, db] = await Promise.all([repoPromise, dbRepoPromise]);
+      const [api, db, dbRepoTags] = await Promise.all([
+        repoPromise,
+        dbRepoPromise,
+        dbRepoTagsPromise,
+      ]);
       console.log('API:', api);
       console.log('DB:', db);
+      console.log('RepoTags:', dbRepoTags);
+
+      repoTags = dbRepoTags;
 
       // Get just the API repo ids
       const apiIDs = api.map(getJustApiID);
@@ -289,45 +311,67 @@ $(document).ready(function() {
 
   //! ??????????????????????????????
   // This function grabs all the repo tags, being called from within initializeRows, #57
-  function getRepoTags(repoID) {
+  function getRepoTags(repoTags, repoID) {
     // console.log('repo ID as a param', repoID);
 
+    // console.log(repoTags);
+    // console.log(repoID);
+
     // arrFilteredTags = [];
+    let arrFilteredTags = [];
 
-    $.get(`/api/repotags/${repoID}`, function(data) {
-      repoTags = data;
-      // Display the repo tags for each card
-      // return repoTags;
-      // console.log('Repo Tags', repoTags);
+    // console.log(typeof repoID);
 
-      // Now get the tag info and display
-      // loop over the repo tags and find the matches
-      // New array for the results
+    // todo change Repo Tags repoID to integer
+    // strRepoID = toString(repoID);
 
-      // console.log('Tags:', tags);
+    // Filter the tags
+    const filteredRepoTags = repoTags.filter(tag => tag.repoID == repoID);
+    // console.log('Filtered Repo Tags', filteredRepoTags);
 
-      // Filter the tags to each repo tag to get the info to display
-      function filterTags(repoTagID) {
-        // Covert to integer
-        const intTagID = parseInt(repoTagID);
+    // Get route to get the repo tags associated with each repo
+    // $.get(`/api/repotags/${repoID}`, function(data) {
+    // repoTags = data;
+    // Display the repo tags for each card
+    // return repoTags;
+    // console.log('Repo Tags', repoTags);
 
-        // Filter the tags
-        const filteredTags = tags.filter(tag => tag.id === intTagID);
-        // console.log('Filtered', filteredTags);
+    // Now get the tag info and display
+    // loop over the repo tags and find the matches
+    // New array for the results
 
-        return filteredTags;
-      }
+    // console.log('Tags:', tags);
 
-      // Loop through the repo tags and get the matching tags
-      for (let i = 0; i < repoTags.length; i++) {
-        // Call the filter function
-        const getFiltered = filterTags(repoTags[i].tagID);
-        arrFilteredTags.push(getFiltered);
-      }
+    // Filter the tags to each repo tag to get the info to display
+    function filterTags(repoTagID) {
+      // Covert to integer
+      const intTagID = parseInt(repoTagID);
+      // console.log('int tag', intTagID);
 
-      console.log('Filtered Tags:', arrFilteredTags);
-    });
-    console.log('Filtered Tags2:', arrFilteredTags);
+      // console.log('Tags', tags);
+
+      // Filter the tags
+      const filteredTags = tags.filter(tag => tag.id === intTagID);
+      // console.log('Filtered', filteredTags);
+
+      return filteredTags;
+    }
+
+    // Loop through the repo tags and get the matching tags
+    for (let i = 0; i < filteredRepoTags.length; i++) {
+      // Call the filter function
+      // console.log(repoTags[i].tagID);
+
+      const getFiltered = filterTags(filteredRepoTags[i].tagID);
+      // console.log(getFiltered);
+
+      arrFilteredTags = [...arrFilteredTags, ...getFiltered];
+      // console.log(arrFilteredTags);
+    }
+
+    // console.log('Filtered Tags:', arrFilteredTags);
+    // });
+    // console.log('Filtered Tags2:', arrFilteredTags);
     return arrFilteredTags;
   }
 

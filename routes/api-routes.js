@@ -71,6 +71,15 @@ module.exports = function(app) {
     });
   });
 
+  // GET route for getting all of the repo tags from the db
+  app.get('/api/dbRepoTags', function(req, res) {
+    // findAll returns all entries for a table when used with no options
+    db.RepoTag.findAll({}).then(function(dbRepoTags) {
+      // We have access to the repos as an argument inside of the callback function
+      res.json(dbRepoTags);
+    });
+  });
+
   // POST route for saving the repos from the api to the db
   // app.post('/api/repos', function(req, res) {
   // console.log(req.body.id);
