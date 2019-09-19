@@ -21,9 +21,6 @@ $(document).ready(function() {
   // Initial repoID, used when click on Add Tag, this is the mysql integer id, not the GitHub string id
   let repoID = 0;
 
-  // Initial array to hold the filtered repo tags for each repo
-  // const arrFilteredTags = [];
-
   // This function displays repos from the database
   function initializeRows() {
     console.log('In Initialize Rows');
@@ -93,12 +90,12 @@ $(document).ready(function() {
       }
 
       const cardTags = $('<div>');
-      const btnAddTag = $(
-        `<button id="${currentRepos[i].id}" type="button" class="btn btn-success btn-sm btnAdd" rel="popover" title="Add a Tag to ${currentRepos[i].repoName} <a href='#' class='close' data-dismiss='alert'>&times;</a>"
-        >Add Tag</button>`
+      const btnAssignTag = $(
+        `<button id="${currentRepos[i].id}" type="button" class="btn btn-success btn-sm btnAssign" rel="popover" title="Add a Tag to ${currentRepos[i].repoName} <a href='#' class='close' data-dismiss='alert'>&times;</a>"
+        >Assign Tag</button>`
       );
 
-      cardTags.append(btnAddTag);
+      cardTags.append(btnAssignTag);
 
       const cardH5 = $('<h5>');
       cardH5.addClass('card-title');
@@ -138,7 +135,7 @@ $(document).ready(function() {
       // console.log(tags[i].tagName);
 
       const btnTag = $('<button>');
-      btnTag.addClass('btn btn-sm');
+      btnTag.addClass('btn btn-sm tag');
       btnTag.css('background-color', tags[i].tagColor);
       btnTag.text(tags[i].tagName);
 
@@ -153,7 +150,21 @@ $(document).ready(function() {
 
       // Append to the popTags div
       $('#popTags').append(popTag);
-    }
+    } // End display tags
+
+    // Pipe ascii
+    const pipe = String.fromCharCode(124);
+
+    // Append pipe after last tag
+    $('#tags').append(pipe);
+
+    // Create Add Tag Button
+    const btnAddTag = $('<button>');
+    btnAddTag.text('Add Tag');
+    btnAddTag.addClass('btn btn-sm btn-success btnAdd');
+
+    // Append Add Tag Button
+    $('#tags').append(btnAddTag);
   }
 
   // Function to map to just the api repo ids
@@ -273,12 +284,15 @@ $(document).ready(function() {
     $.get('/api/tags', function(data) {
       tags = data;
       // console.log(tags);
+
+      // Empty the tag div and then rebuild so we can see the new tags
+      $('#tags').empty();
+
       // Display the tags on the page
       displayTags();
     });
   }
 
-  //! ??????????????????????????????
   // This function grabs all the repo tags, being called from within initializeRows, #57
   function getRepoTags(repoTags, repoID) {
     // console.log('repo ID as a param', repoID);
@@ -341,8 +355,6 @@ $(document).ready(function() {
       tagID,
     };
 
-    // getAllRepos
-
     // Send the tag to route to be inserted
     $.post('/api/repotags', tag, getAllRepos).then(function(data) {
       console.log('From Post Repo Tags ', data);
@@ -384,11 +396,37 @@ $(document).ready(function() {
       .popover('hide');
   });
 
-  // Add Tag Button Clicked
-  $(document).on('click', '.btnAdd', function() {
-    console.log('btnAdd clicked');
+  // Assign Tag Button Clicked
+  $(document).on('click', '.btnAssign', function() {
+    console.log('btnAssign clicked');
     repoID = $(this).attr('id');
-    console.log('Add Tag Click with repo ID', repoID);
+    console.log('Assign Tag Click with repo ID', repoID);
+  });
+
+  // Add Tag Button Clicked
+  $(document).on('click', '.btnAdd', function(e) {
+    console.log('btnAdd clicked');
+    // repoID = $(this).attr('id');
+    e.preventDefault();
+    console.log('Add Tag Click');
+    const tag = prompt('Please enter a new Tag Name');
+    if (tag != null) {
+      console.log(tag);
+
+      const objTag = {
+        tagName: tag.trim(),
+        tagColor: '#00FFFF',
+      };
+
+      // Send value to the post route to add the tag to the db
+      // Send the tag to route to be inserted
+      $.post('/api/tag', objTag).then(function(data) {
+        console.log(data);
+
+        // Call the getTags function to display the new tag
+        getTags();
+      });
+    }
   });
 
   // Popover Tag clicked to Assign
