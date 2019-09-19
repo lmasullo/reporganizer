@@ -10,7 +10,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/lumen/bootstrap.min.css" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   
-  <link rel="stylesheet" href="./styles2.css" media="screen" title="no title">
+  <link rel="stylesheet" href="./styles.css" media="screen" title="no title">
+
   <link rel="stylesheet" href="css/fonts/stylesheet.css">
   <style>
     /* .card-img-top {
@@ -22,79 +23,91 @@
   <title>RepOrganizer</title>
 </head>
 
-<body>
+<body data-fb-color onload="myFunction()" style="margin:0;">
 
-  <!--//  File///////////////////////////////////-->
-        <div class="page__style projects">
-          <div class="page__description">
-            <div id="projects">
-              <button class="btn_nav home_link">Back</button>
-              <h1>File type</h1>
-            </div>
-          </div>
-        </div>
-<!--//  Date///////////////////////////////////-->
-        <div class="page__style skills">
-          <div class="page__description">
-            <div id="skills">
-                <button class="btn_nav home_link">Back</button>
-              <h1>Date</h1>        
-            </div>
-          </div>
-        </div>
-        
-<!--//  Public///////////////////////////////////-->
-        <div class="page__style about">
-          <div class="page__description">
-            <div id="about">
+  <!--//  HTML-->
+  <div class="page__style html">
+    <div class="page__description">
+      <div id="html">
+        <button class="btn_nav home_link">Back</button>
+    <h1 class= "pageh1"> html</h1>
+      </div>
+    </div>
+  </div>
 
-                <button class="btn_nav home_link">Home</button>
-              <h1>Public</h1>
+<!--//  CSS-->
+  <div class="page__style css">
+    <div class="page__description">
+      <div id="css">
+        <button class="btn_nav home_link">Back</button>
+        <h1 class= "pageh1">css</h1>
         
-            </div>
-          </div>
-        </div>
-<!--//  Name///////////////////////////////////-->
-        <div class="page__style contact">
-          <div class="page__description">
-            <div id="contact">
-                <button class="btn_nav home_link">Back</button>
-              <h1>Name</h1>
-              <div class="results">
-                  <div id="results"></div>
-                </div>
+      </div>
+    </div>
+  </div>
+        
+<!--//  Javascript-->
+  <div class="page__style javascript">
+    <div class="page__description">
+      <div id="javascript">
+      <button class="btn_nav home_link">Back</button>
+      <h1 class= "pageh1">javascript</h1>
+      </div>
+    </div>
+  </div>
 
-            </div>
-          </div>
+<!--//  jQuery-->
+  <div class="page__style jquery">
+    <div class="page__description">
+      <div id="jquery">
+        <button class="btn_nav home_link">Back</button>
+      <h1 class= "pageh1">jQuery</h1>
+  
         </div>
-        <!--
-                //  home
-                ///////////////////////////////////-->
-        <div class="page__style home">
-          <div class="page__description">
-            <div id="home">
-        
-              <div class="box"></div>
-              <h1 class="ml1">
-                  <span class="text-wrapper">
-                    <span class="line line1"></span>
-                    <span class="letters">RepOrganizer</span>
-                    <span class="line line2"></span>
-                  </span>
-                </h1>
-                <p>A better way to manage your GitHub repos.</p>
-              <h1>How Would you like to organize your GitHub repositories?</h1>
-        
-              <button class="btn_nav projects_link">File type</button>
-              <button class="btn_nav skills_link">Date</button>
-              <button class="btn_nav contact_link">Name</button>
-              <button class="btn_nav about_link">Public</button>
-        
+      </div>
+    </div>
+  </div>
 
-            </div>
-          </div>
+<!--//  Node-->
+  <div class="page__style node">
+    <div class="page__description">
+      <div id="node">
+        <button class="btn_nav home_link">Back</button>
+        <h1 class= "pageh1">Node</h1>
+
         </div>
+      </div>
+    </div>
+  </div>
 
+<!--//  home-->
+<div class="page__style home">
+  <div class="page__description">
+    <div id="home">
+      <div class="box">
+        
+        <h1 class="ml1">
+          <span class="text-wrapper">
+            <span class="letters">REPORGANIZER</span>     
+            <label class="container html">HTML<input type="checkbox"><span class="checkmark">HTML</span></label>
+            <label class="container css">CSS<input type="checkbox"><span class="checkmark">CSS</span></label>
+            <label class="container javascript">Javascript<input type="checkbox"><span class="checkmark">JavaScript</span></label>
+            <label class="container jquery">jQuery<input type="checkbox"><span class="checkmark">jQuery</span></label>
+            <label class="container node">Node<input type="checkbox"><span class="checkmark">node</span></label>
+            <span class="p"><h4> better way to manage your GitHub repos.</h4></span>
+          </span>
+          
+        </h1>
+    
+      <div id="loader"></div>
+      <div class="wrap"><span class="circle circle-1"><span class="circle circle-2"><span class="circle circle-3"></span></span>
+      </span>
+  </div>
+</div>
+      <div style= "display:none;" id="myDiv" class="animate-bottom"><div id="results"></div></div>
+  </div>
+</div>
+</div>
 
 
 

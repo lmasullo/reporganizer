@@ -1,0 +1,336 @@
+.hide {
+    display: none;
+  }
+  #results{
+    box-sizing: border-box;
+    display: inline-block;
+    font-size: 8px;
+    -webkit-column-count: 4;
+    -moz-column-count: 4;
+    column-count: 4;
+  }
+  .text-wrapper{
+    
+  }
+
+  .page__style {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    margin: auto auto;
+    overflow: scroll;
+  
+  }
+  .page__style .page__description {
+    color: #fff;
+    font-weight: 300;
+
+  }
+  .page__style h1 {
+    font-weight: 300;
+    margin-bottom: 30px;
+    font-family: "ticketingregular";
+  }
+  h1.pageh1{
+    color: black;
+
+  }
+  .container {
+    position: relative;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    width: 163px;
+    border-radius: 10px;
+  }
+  label.container {
+    font-family: "karmafuture";
+    color: rgb(0, 0, 0);
+    text-align: left;
+    cursor: pointer;
+    font-size: 24px;
+    text-transform:uppercase;
+  }
+
+  label{
+   margin-left: 2px; 
+  }
+  label input {
+        word-spacing: 0%;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+  }
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+
+  }
+  .container:hover input ~ .checkmark {
+    opacity: .4;
+    background-color: black;
+    border-radius: 10px;
+  }
+  
+  /* When the checkbox is checked, add a blue background */
+  .container input:checked ~ .checkmark {
+    opacity: 1;
+    background-color: inherit;
+    font-family: "karmasuture";
+    color: black;
+    font-size: inherit;
+    background-color: rgb(0, 102, 255);
+    border-radius: 10px;
+    width: 163px;
+    font-weight: bold;
+  }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  /* Style the checkmark/indicator */
+.container .checkmark:after {
+
+  border-width: 0 1px 1px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+  .page__style .btn_nav:focus,
+  .page__style .btn_nav:active {
+    outline: none;
+  }
+  .page__style a {
+    text-decoration: none;
+    color: #fff;
+    font-family: "digital_dreamersregular";
+  }
+  .page__style a:hover {
+    color: rgb(0, 0, 0);
+  }
+  .animate_content {
+    animation: animate 1.0s ease;
+  }
+  .fadeIn {
+    z-index: 10;
+  }
+  label {
+    color: black;
+  }
+  /*  home
+  -----------------------------------*/
+  .home {
+    background: black;
+  }
+  /*  Projects
+  -----------------------------------*/
+  .html {
+    background: #b3ff00;
+  }
+  /*  Skills
+  -----------------------------------*/
+  .css {
+    background: #ff7300;
+  }
+  /*  About
+  -----------------------------------*/
+  .javascript {
+    background: #c98900;
+  }
+  /*  Contact
+  -----------------------------------*/
+  .jquery {
+    background: #ce009a;
+  }
+  .node {
+    background: #ac9292;
+  }
+  /*****************************************************************
+  ~ Mobile media-queries (max-width: 767px)
+  ******************************************************************/
+  @media only screen and (max-width: 767px) {
+    .page__description h1 {
+      margin-top: 100px;
+    }
+  }
+  @-moz-keyframes animate {
+    10% {
+      transform: scale(1, 0.002);
+    }
+    35% {
+      transform: scale(0.2, 0.002);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.2, 0.002);
+      opacity: 0;
+    }
+    85% {
+      transform: scale(1, 0.002);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  }
+  /* @-webkit-keyframes animate {
+    10% {
+      transform: scale(1, 0.002);
+    }
+    35% {
+      transform: scale(0.2, 0.002);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.2, 0.002);
+      opacity: 0;
+    }
+    85% {
+      transform: scale(1, 0.002);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  } */
+  /* @-o-keyframes animate {
+    10% {
+      transform: scale(1, 0.002);
+    }
+    35% {
+      transform: scale(0.2, 0.002);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.2, 0.002);
+      opacity: 0;
+    }
+    85% {
+      transform: scale(1, 0.002);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  } */
+  /* @keyframes animate {
+    10% {
+      transform: scale(1, 0.002);
+    }
+    35% {
+      transform: scale(0.2, 0.002);
+      opacity: 1;
+    }
+    50% {
+      transform: scale(0.2, 0.002);
+      opacity: 0;
+    }
+    85% {
+      transform: scale(1, 0.002);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  } */
+  .ml1 {
+    font-weight: 900;
+    font-size: 3.5em;
+  }
+
+  .p {
+    font-family: "ticketingregular";
+    font-size: 22px;
+  }
+  .ml1 .letter {
+    display: inline-block;
+    line-height: 1em;
+    font-family: "ticketingregular";
+    font-size: 88px;
+    text-shadow: 5px black;
+  }
+  ​ .ml1 .text-wrapper {
+    position: relative;
+    display: inline-block;
+    padding-top: 0.1em;
+    padding-right: 0.05em;
+    padding-bottom: 0.15em;
+  }
+  ​
+  ​ .edit {
+    width: 100%;
+  }
+  #results {
+    color: black;
+  }
+  
+  .results {
+    -webkit-column-count: 4;
+    -moz-column-count: 4;
+    column-count: 4;
+    width:20%;
+  }
+  .btn {
+    margin: 2px;
+    
+  }
+  .hide {
+    display: none;
+  }
+  #loader {
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    width: 150px;
+    height: 150px;
+    margin-left: 45%;
+    margin-right: 50%; 
+    border: 16px solid rgb(255, 255, 255);
+    border-radius: 50%;
+    border-top: 16px solid black; 
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+  }
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  .animate-bottom {
+    position: relative;
+    -webkit-animation-name: animatebottom;
+    -webkit-animation-duration: 1s;
+    animation-name: animatebottom;
+    animation-duration: 1s
+  }
+  
+  @-webkit-keyframes animatebottom {
+    from { bottom:-100px; opacity:0 } 
+    to { bottom:0px; opacity:1 }
+  }
+  
+  @keyframes animatebottom { 
+    from{ bottom:-100px; opacity:0 } 
+    to{ bottom:0; opacity:1 }
+  }
+  #myDiv {
+    display: none;
+    text-align: center;
+  }
