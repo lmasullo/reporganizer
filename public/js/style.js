@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable no-var */
 var textWrapper = document.querySelector('.ml1 .letters');
@@ -31,57 +32,58 @@ $('.btn_nav').click(function() {
   $('.page__style').addClass('animate_content');
   $('.page__description')
     .fadeOut(100)
-    .delay(2800)
+    .delay(1400)
     .fadeIn();
 
   setTimeout(function() {
     $('.page__style').removeClass('animate_content');
-  }, 3200);
+  }, 1500);
 
   // remove fadeIn class after 1500ms
 
   setTimeout(function() {
     $('.page__style').removeClass('fadeIn');
-  }, 1500);
+  }, 500);
 });
 
 // on click show page after 1500ms
 $('.home_link').click(function() {
   setTimeout(function() {
     $('.home').addClass('fadeIn');
-  }, 1500);
+  }, 500);
 });
 
 $('.html_link').click(function() {
   setTimeout(function() {
     $('.html').addClass('fadeIn');
-  }, 1500);
+  }, 500);
 });
 
 $('.css_link').click(function() {
   setTimeout(function() {
     $('.css').addClass('fadeIn');
-  }, 1500);
+  }, 500);
 });
 
 $('.javascript_link').click(function() {
   setTimeout(function() {
     $('.javascript').addClass('fadeIn');
-  }, 1500);
+  }, 500);
 });
 
 $('.jquery_link').click(function() {
   setTimeout(function() {
     $('.jquery').addClass('fadeIn');
-  }, 1500);
+  }, 500);
 });
 
 $('.node_link').click(function() {
   setTimeout(function() {
     $('.node').addClass('fadeIn');
-  }, 1500);
+  }, 500);
 });
 
+// circle loader
 var myVar;
 
 function myFunction() {
