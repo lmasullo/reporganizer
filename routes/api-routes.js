@@ -243,6 +243,21 @@ module.exports = function(app) {
     });
   });
 
+  // DELETE route for deleting repos. We can get the id of the todo to be deleted from
+  // req.params.id
+  app.delete('/api/repotags/:id', function(req, res) {
+    // We just have to specify which repo we want to destroy with "where"
+    console.log(req.params.id);
+
+    db.RepoTag.destroy({
+      where: {
+        tagID: req.params.id,
+      },
+    }).then(function(dbRepoTags) {
+      res.json(dbRepoTags);
+    });
+  });
+
   //! ******************************************
 
   // POST route for saving a new todo
