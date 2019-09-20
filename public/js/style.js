@@ -1,83 +1,95 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable no-var */
 var textWrapper = document.querySelector('.ml1 .letters');
-textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
-​
-​
-anime.timeline({loop: false})
+textWrapper.innerHTML = textWrapper.textContent.replace(
+  /\S/g,
+  "<span class='letter'>$&</span>"
+);
+
+anime
+  .timeline({ loop: false })
   .add({
     targets: '.ml1 .letter',
-    scale: [0.3,1],
-    opacity: [0,1],
+    scale: [0.3, 1],
+    opacity: [0, 1],
     translateZ: 0,
-    easing: "easeOutExpo",
+    easing: 'easeOutExpo',
     duration: 600,
-    delay: (el, i) => 70 * (i+1)
-  }).add({
+    delay: (el, i) => 70 * (i + 1),
+  })
+  .add({
     targets: '.ml1 .line',
-    scaleX: [0,1],
-    opacity: [0.5,1],
-    easing: "easeOutExpo",
+    scaleX: [0, 1],
+    opacity: [0.5, 1],
+    easing: 'easeOutExpo',
     duration: 700,
     offset: '-=875',
-    delay: (el, i, l) => 80 * (l - i)
+    delay: (el, i, l) => 80 * (l - i),
   });
-​
-  var basicTimeline = anime.timeline({
-    autoplay: false
-  });
-  
-  var pathEls = $(".check");
-  for (var i = 0; i < pathEls.length; i++) {
-    var pathEl = pathEls[i];
-    var offset = anime.setDashoffset(pathEl);
-    pathEl.setAttribute("stroke-dashoffset", offset);
-  }
-  basicTimeline
-  .add({
-    targets: ".text",
-    duration: 1,
-    opacity: "0"
-  })
-  .add({
-    targets: ".button",
-    duration: 1300,
-    height: 10,
-    width: 300,
-    backgroundColor: "#2B2D2F",
-    border: "0",
-    borderRadius: 100
-  })
-  .add({
-    targets: ".progress-bar",
-    duration: 2000,
-    width: 300,
-    easing: "linear"
-  })
-  .add({
-    targets: ".button",
-    width: 0,
-    duration: 1
-  })
-  .add({
-    targets: ".progress-bar",
-    width: 80,
-    height: 80,
-    delay: 500,
-    duration: 750,
-    borderRadius: 80,
-    backgroundColor: "#71DFBE"
-  })
-  .add({
-    targets: pathEl,
-    strokeDashoffset: [offset, 0],
-    duration: 200,
-    easing: "easeInOutSine"
-  })
-;
-​
-$(".button").click(function() {
-  basicTimeline.play();
+$('.btn_nav').click(function() {
+  // animate content
+  $('.page__style').addClass('animate_content');
+  $('.page__description')
+    .fadeOut(100)
+    .delay(1400)
+    .fadeIn();
+
+  setTimeout(function() {
+    $('.page__style').removeClass('animate_content');
+  }, 1500);
+
+  // remove fadeIn class after 1500ms
+
+  setTimeout(function() {
+    $('.page__style').removeClass('fadeIn');
+  }, 500);
 });
-​
-$(".text").click(function() {
-  basicTimeline.play();
+
+// on click show page after 1500ms
+$('.home_link').click(function() {
+  setTimeout(function() {
+    $('.home').addClass('fadeIn');
+  }, 500);
 });
+
+$('.html_link').click(function() {
+  setTimeout(function() {
+    $('.html').addClass('fadeIn');
+  }, 500);
+});
+
+$('.css_link').click(function() {
+  setTimeout(function() {
+    $('.css').addClass('fadeIn');
+  }, 500);
+});
+
+$('.javascript_link').click(function() {
+  setTimeout(function() {
+    $('.javascript').addClass('fadeIn');
+  }, 500);
+});
+
+$('.jquery_link').click(function() {
+  setTimeout(function() {
+    $('.jquery').addClass('fadeIn');
+  }, 500);
+});
+
+$('.node_link').click(function() {
+  setTimeout(function() {
+    $('.node').addClass('fadeIn');
+  }, 500);
+});
+
+// circle loader
+var myVar;
+
+function myFunction() {
+  myVar = setTimeout(showPage, 5000);
+}
+function showPage() {
+  document.getElementById('loader').style.display = 'none';
+  // document.getElementById('myDiv').style.display = 'block'
+}

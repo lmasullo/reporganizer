@@ -1,3 +1,4 @@
+
 $(document).ready(function() {
   // Adding event listeners for deleting, editing, and adding todos
   $(document).on('click', 'button.delete', deleteTodo);
@@ -542,7 +543,6 @@ $(document).ready(function() {
       location.reload();
     });
   });
-
   //! **********************************************
 
   // Our initial todos array
