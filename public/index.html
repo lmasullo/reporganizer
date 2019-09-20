@@ -10,8 +10,17 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 
+  <!-- Google Fonts -->
+  <link href='https://fonts.googleapis.com/css?family=Roboto Mono' rel='stylesheet'>
+
   <!-- Use this style until Joe's index is finished -->
   <style>
+    .jumbotron {
+      background-color: royalblue;
+      font-family: 'Roboto Mono';
+      font-size: 22px;
+    }
+
     .btn {
       margin: 5px;
     }
@@ -21,6 +30,14 @@
     }
 
     .btnRepoTags:hover {
+      border: black 1px solid;
+    }
+
+    #tags {
+      margin-bottom: 10px;
+    }
+
+    .tag:hover {
       border: black 1px solid;
     }
 
@@ -65,7 +82,7 @@
 <body>
   <div class="container">
     <div class="jumbotron">
-      <h1 class="display-4">RepOrganizer</h1>
+      <h1 class="display-4"><img src="images/tag.png"> RepOrganizer</h1>
       <hr class="my-4" />
       <p>A better way to manage your GitHub repos.</p>
     </div>
