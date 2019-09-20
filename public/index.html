@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
 
+<html>
 <head>
   <!-- Required meta tags -->
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
   <!-- Bootstrap CSS -->
-<<<<<<< HEAD
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/lumen/bootstrap.min.css" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
   
@@ -39,7 +38,7 @@
           </span>
           
         </h1>
-
+        <div id="loader"></div>
 
         <div class="container">
 
@@ -55,12 +54,61 @@
       
         </div>
         <span>
-      <div id="loader"></div>
+   
+            <!-- The Modal -->
+            <div class="modal" id="tagModal">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                    <h4 class="modal-title">Modal Heading</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                      &times;
+                    </button>
+                  </div>
+      
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                    <input
+                      type="text"
+                      id="txtTagName"
+                      name="txtTagName"
+                      class="form-control"
+                      placeholder="Enter New Tag Name"
+                    />
+                  </div>
+      
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                    <button
+                      id="btnSaveTag"
+                      type="button"
+                      class="btn btn-success btnSave"
+                    >
+                      Save
+                    </button>
+                    <button
+                      id="btnDelTag"
+                      type="button"
+                      class="btn btn-danger btnDel"
+                    >
+                      Delete
+                    </button>
+                    <button
+                      id="btnCancelTag"
+                      type="button"
+                      class="btn btn-warning"
+                      data-dismiss="modal"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
       </span>
   </div>
 </div>
 
-      <!-- <div style= "display:none;" id="myDiv" class="animate-bottom"><div id="tags"></div><div id="results"><div id="popTags"></div></div></div> -->
+      <div style= "display:none;" id="myDiv" class="animate-bottom"><div id="tags"></div><div id="results"><div id="popTags"></div></div></div>
   </div>
 </div>
 </div>
