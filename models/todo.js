@@ -3,5 +3,6 @@ module.exports = function(sequelize, DataTypes) {
     text: DataTypes.STRING,
     complete: DataTypes.BOOLEAN,
   });
+
   return Todo;
 };

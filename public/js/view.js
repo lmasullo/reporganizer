@@ -1,14 +1,4 @@
 $(document).ready(function() {
-  // Adding event listeners for deleting, editing, and adding todos
-  $(document).on('click', 'button.delete', deleteTodo);
-  $(document).on('click', 'button.complete', toggleComplete);
-  $(document).on('click', '.todo-item', editTodo);
-  $(document).on('keyup', '.todo-item', finishEdit);
-  $(document).on('blur', '.todo-item', cancelEdit);
-  $(document).on('submit', '#todo-form', insertTodo);
-
-  //! *************************************
-
   // The initial repos array
   let currentRepos = [];
 
@@ -25,18 +15,12 @@ $(document).ready(function() {
   function initializeRows() {
     console.log('In Initialize Rows');
 
-    console.log('Repo Tags', repoTags);
-
     // Build the card column element
     const cardCol = $('<div>');
     cardCol.addClass('card-columns');
 
     // Loop over the db repos
     for (let i = 0; i < currentRepos.length; i++) {
-      // console.log(currentRepos[i]);
-
-      console.log(i);
-
       // Build the card elements
       const divCard = $('<div>');
       divCard.addClass('card');
@@ -44,102 +28,69 @@ $(document).ready(function() {
       // Remove all the elements and then rebuild so we can see the new repotags
       $('.card').remove();
 
+      // Set the width of the card
       divCard.css('width', '15rem');
 
-      // Array of images
+      // Array of images for the cards
+      // todo This will eventually be a user function to be able to assign custom images
       const arrImages = [
         '../images/bamazon.png',
         '../images/clicky.png',
         '../images/friend.png',
         '../images/beer.png',
         '../images/puppypicker.png',
+        '../images/edshifts.png',
+        '../images/hangman.png',
+        '../images/sportairsouth.png',
+        '../images/clicky2.png',
+        '../images/train.png',
       ];
 
+      // Build the card image
       const cardImg = $('<img>');
       cardImg.addClass('card-img-top');
 
-      if (i < 5) {
-        src = arrImages[0];
-      } else if (i > 5 && i < 10) {
-        src = arrImages[1];
-      } else if (i > 10 && i < 15) {
-        src = arrImages[2];
-      } else if (i > 15 && i < 20) {
-        src = arrImages[3];
-      } else if (i > 20 && i < 35) {
-        src = arrImages[4];
-      }
+      // Random number to pick an image to display
+      const randNum = Math.floor(Math.random() * 10);
 
-      // if (i === 1) {
-      //   src = arrImages[0];
-      // } else if (i === 2) {
-      //   src = arrImages[1];
-      // } else if (i === 3) {
-      //   src = arrImages[2];
-      // } else if (i === 4) {
-      //   src = arrImages[3];
-      // } else {
-      //   src = arrImages[4];
-      // }
-
+      // Set the image src
+      const src = arrImages[randNum];
       cardImg.attr('src', src);
 
+      // Build the card body
       const divCardBody = $('<div>');
-
       divCardBody.addClass('card-body');
 
+      // Call the function that gets all the repo tags for this repo (passes the repo id)
       const matchingTags = getRepoTags(repoTags, currentRepos[i].id);
-      // console.log('Match', matchingTags);
-      // console.log(matchingTags.length);
       console.log('Start Building Repo Tags list');
 
+      // Build the div to hold all the assigned tags
       if (matchingTags.length > 0) {
-        // console.log('Match', matchingTags);
-        // console.log(matchingTags[0].tagName);
-        // console.log('Match', currentRepos[i].id);
-
-        // Remove all the elements and then rebuild so we can see the new repotags
-        // $('.btnRepoTags').remove();
-        // Delete the button from the div
-        // const buttonToDel = $('.btnRepoTags[data-id="3"]');
-        // buttonToDel.remove();
-        // console.log('Btn', buttonToDel);
-
         for (let i = 0; i < matchingTags.length; i++) {
           // Now build the div to hold the tags
-          // const divAssocTags = $('<div>');
-
           const btnAssocTag = $('<button>');
           btnAssocTag.addClass('btn btn-sm btnRepoTags');
           btnAssocTag.css('background-color', matchingTags[i].tagColor);
           btnAssocTag.text(matchingTags[i].tagName);
           btnAssocTag.attr('data-id', matchingTags[i].id);
-          // divAssocTags.append(btnAssocTag);
           divCardBody.append(btnAssocTag);
         }
+        // Put a hard return after the tag to separate from the assign button
         const hr = $('<hr>');
         divCardBody.append(hr);
-
-        // Delete the button from the div
-        // const buttonToDel = $('.btnRepoTags[data-id="3"]');
-        // console.log('Btn', buttonToDel);
       }
 
+      // Build the Assign Tag button
       const cardTags = $('<div>');
       const btnAssignTag = $(
         `<button id="${currentRepos[i].id}" type="button" class="btn btn-success btn-sm btnAssign" rel="popover" title="Add a Tag to ${currentRepos[i].repoName} <a href='#' class='close' data-dismiss='alert'>&times;</a>"
         >Assign Tag</button>`
       );
-
       cardTags.append(btnAssignTag);
-
       const cardH5 = $('<h5>');
       cardH5.addClass('card-title');
       cardH5.html(currentRepos[i].repoName);
-
-      // const cardH6 = $('<h6>');
-      // cardH6.addClass('card-subtitle');
-      // cardH6.html(currentRepos[i].repoPrivate);
 
       const cardPrivate = $('<p>');
       cardPrivate.html(`Private Repo: ${currentRepos[i].repoPrivate}`);
@@ -161,15 +112,14 @@ $(document).ready(function() {
     }
     // Append the cards to the index.html div
     $('#results').append(cardCol);
-  }
+  } // End Initialize Rows
 
+  // Function to display the tags
   function displayTags() {
     console.log('In display tags');
 
     // Loop over the db tags
     for (let i = 0; i < tags.length; i++) {
-      // console.log(tags[i].tagName);
-
       // Create the tag buttons
       const btnTag = $('<button>');
       btnTag.addClass('btn btn-sm tag');
@@ -206,7 +156,7 @@ $(document).ready(function() {
 
     // Append Add Tag Button
     $('#tags').append(btnAddTag);
-  }
+  } // End Display Tags
 
   // Function to map to just the api repo ids
   function getJustApiID(item) {
@@ -229,24 +179,22 @@ $(document).ready(function() {
 
     // Now create an array of objects with the repos we want to add
     for (let i = 0; i < difference.length; i++) {
-      const repos = api.filter(function(repo) {
+      const reposToAdd = api.filter(function(repo) {
         return repo.id === difference[i];
       });
 
       // Create an object to push
       const objRepo = {
-        repoID: repos[0].id,
-        repoName: repos[0].name,
-        repoURL: repos[0].url,
-        repoPrivate: repos[0].isPrivate,
-        timestamp: repos[0].updatedAt,
+        repoID: reposToAdd[0].id,
+        repoName: reposToAdd[0].name,
+        repoURL: reposToAdd[0].url,
+        repoPrivate: reposToAdd[0].isPrivate,
+        timestamp: reposToAdd[0].updatedAt,
       };
 
       // Push the object to the array
       newRepos.push(objRepo);
     }
-
-    console.log('New Repos', newRepos);
 
     // Wrap the array in an object
     const repos = { newRepos };
@@ -261,7 +209,7 @@ $(document).ready(function() {
       // Call the function that displays the cards
       initializeRows();
     });
-  }
+  } // End Insert Repo
 
   // Use Async/Await to get the repos from both the api and db
   // so they return at the same time so I can compare
@@ -289,21 +237,18 @@ $(document).ready(function() {
       console.log('DB:', db);
       console.log('RepoTags:', dbRepoTags);
 
+      // Reassign the array
       repoTags = dbRepoTags;
 
       // Get just the API repo ids
       const apiIDs = api.map(getJustApiID);
-      // console.log('Just the apiIDs:', apiIDs);
 
       // Get just the db repo ids
       const dbIDs = db.map(getJustDbID);
-      // console.log('Just the dbIDs:', dbIDs);
 
       // Compare the arrays and get what's different
       const difference = apiIDs.filter(x => !dbIDs.includes(x));
-
-      // console.log('Difference Array:', difference);
-      // console.log(difference.length);
+      console.log(difference);
 
       // Call the route to insert the repos
       // Check if there are any new repos to add, if not, just call initializeRows
@@ -312,6 +257,8 @@ $(document).ready(function() {
       } else {
         $.get('/api/dbRepos', function(data) {
           currentRepos = data;
+          console.log(currentRepos);
+
           initializeRows();
         });
       }
@@ -323,8 +270,8 @@ $(document).ready(function() {
   // This function grabs tags from the database and updates the view
   function getTags() {
     $.get('/api/tags', function(data) {
+      // Reassign the array
       tags = data;
-      // console.log(tags);
 
       // Empty the tag div and then rebuild so we can see the new tags
       $('#tags').empty();
@@ -336,34 +283,22 @@ $(document).ready(function() {
 
   // This function grabs all the repo tags, being called from within initializeRows, #57
   function getRepoTags(repoTags, repoID) {
-    // console.log('repo ID as a param', repoID);
-
-    // console.log(repoTags);
-    // console.log(repoID);
-
-    // arrFilteredTags = [];
+    // Declare the array to hold the filtered tags
     let arrFilteredTags = [];
 
-    // console.log(typeof repoID);
-
-    // todo change Repo Tags repoID to integer
+    // todo change Repo Tags repoID to integer so I don't have to use == onn line 295
     // strRepoID = toString(repoID);
 
     // Filter the tags
     const filteredRepoTags = repoTags.filter(tag => tag.repoID == repoID);
-    // console.log('Filtered Repo Tags', filteredRepoTags);
 
     // Filter the tags to each repo tag to get the info to display
     function filterTags(repoTagID) {
       // Covert to integer
       const intTagID = parseInt(repoTagID);
-      // console.log('int tag', intTagID);
-
-      // console.log('Tags', tags);
 
       // Filter the tags
       const filteredTags = tags.filter(tag => tag.id === intTagID);
-      // console.log('Filtered', filteredTags);
 
       return filteredTags;
     }
@@ -371,18 +306,12 @@ $(document).ready(function() {
     // Loop through the repo tags and get the matching tags
     for (let i = 0; i < filteredRepoTags.length; i++) {
       // Call the filter function
-      // console.log(repoTags[i].tagID);
-
       const getFiltered = filterTags(filteredRepoTags[i].tagID);
-      // console.log(getFiltered);
 
+      // Use the spread operator to combine arrays
       arrFilteredTags = [...arrFilteredTags, ...getFiltered];
-      // console.log(arrFilteredTags);
     }
 
-    // console.log('Filtered Tags:', arrFilteredTags);
-    // });
-    // console.log('Filtered Tags2:', arrFilteredTags);
     return arrFilteredTags;
   }
 
@@ -390,7 +319,7 @@ $(document).ready(function() {
   function insertTag(repoID, tagID) {
     console.log('Add Repo Tag Called');
 
-    // event.preventDefault();
+    // Create an object to pass in the route
     const tag = {
       repoID,
       tagID,
@@ -399,12 +328,6 @@ $(document).ready(function() {
     // Send the tag to route to be inserted
     $.post('/api/repotags', tag, getAllRepos).then(function(data) {
       console.log('From Post Repo Tags ', data);
-
-      // Put the response in an array
-      // currentRepos = data;
-
-      // Call the function that displays the cards
-      // initializeRows();
     });
 
     // Close the popover
@@ -447,7 +370,6 @@ $(document).ready(function() {
   // Add Tag Button Clicked
   $(document).on('click', '.btnAdd', function(e) {
     console.log('btnAdd clicked');
-    // repoID = $(this).attr('id');
     e.preventDefault();
     console.log('Add Tag Click');
     const tag = prompt('Please enter a new Tag Name');
@@ -494,17 +416,12 @@ $(document).ready(function() {
 
     // Get the tagID
     const tagID = $(this).attr('data-id');
-    // console.log(tagID);
 
     $.ajax({
       method: 'DELETE',
       url: `/api/repotags/${tagID}`,
     }).then(function(dbRepoTags) {
       console.log('Response from delete', dbRepoTags);
-
-      console.log('Now call Initialize rows');
-      // Call the function to build the cards
-      // initializeRows();
 
       // Call getAllRepos to remove the deleted repo tag
       getAllRepos();
@@ -517,7 +434,6 @@ $(document).ready(function() {
     e.preventDefault();
     const id = $(this).attr('id');
     const title = $(this).html();
-    // console.log(id);
 
     // Update the modal content
     $('.modal-title').html(`Update/Delete ${title}`);
@@ -528,7 +444,7 @@ $(document).ready(function() {
   });
 
   // Save clicked on Tag Modal
-  $(document).on('click', '.btnSave', function(event) {
+  $(document).on('click', '.btnSave', function() {
     console.log('Tag Save Clicked');
     const tagName = $('input[name="txtTagName"]')
       .val()
@@ -558,7 +474,7 @@ $(document).ready(function() {
   });
 
   // Delete clicked on Tag Modal
-  $(document).on('click', '.btnDel', function(event) {
+  $(document).on('click', '.btnDel', function() {
     console.log('Tag Delete Clicked');
 
     const id = $(this).attr('id');
@@ -569,147 +485,8 @@ $(document).ready(function() {
     }).then(function(dbTag) {
       console.log('Response from delete', dbTag);
 
-      // console.log('Now call Initialize rows');
-      // Call the function to build the cards
-      // initializeRows();
-
-      // Call getAllRepos to remove the deleted repo tag
-      // getAllRepos();
+      // Reload to see the changes
       location.reload();
     });
   });
-
-  //! **********************************************
-
-  // Our initial todos array
-  // let todos = [];
-
-  // Getting todos from database when page loads
-  // getTodos();
-
-  //! ********************************************
-
-  // This function grabs todos from the database and updates the view
-  // function getTodos() {
-  //   $.get('/api/todos', function(data) {
-  //     todos = data;
-  //     initializeRows();
-  //   });
-  // }
-
-  // This function deletes a todo when the user clicks the delete button
-  function deleteTodo(event) {
-    event.stopPropagation();
-    const id = $(this).data('id');
-    $.ajax({
-      method: 'DELETE',
-      url: `/api/todos/${id}`,
-    }).then(getTodos);
-  }
-
-  // This function handles showing the input box for a user to edit a todo
-  function editTodo() {
-    const currentTodo = $(this).data('todo');
-    $(this)
-      .children()
-      .hide();
-    $(this)
-      .children('input.edit')
-      .val(currentTodo.text);
-    $(this)
-      .children('input.edit')
-      .show();
-    $(this)
-      .children('input.edit')
-      .focus();
-  }
-
-  // Toggles complete status
-  function toggleComplete(event) {
-    event.stopPropagation();
-    const todo = $(this)
-      .parent()
-      .data('todo');
-    todo.complete = !todo.complete;
-    updateTodo(todo);
-  }
-
-  // This function starts updating a todo in the database if a user hits the "Enter Key"
-  // While in edit mode
-  function finishEdit(event) {
-    const updatedTodo = $(this).data('todo');
-    if (event.which === 13) {
-      updatedTodo.text = $(this)
-        .children('input')
-        .val()
-        .trim();
-      $(this).blur();
-      updateTodo(updatedTodo);
-    }
-  }
-
-  // This function updates a todo in our database
-  function updateTodo(todo) {
-    $.ajax({
-      method: 'PUT',
-      url: '/api/todos',
-      data: todo,
-    }).then(getTodos);
-  }
-
-  // This function is called whenever a todo item is in edit mode and loses focus
-  // This cancels any edits being made
-  function cancelEdit() {
-    const currentTodo = $(this).data('todo');
-    if (currentTodo) {
-      $(this)
-        .children()
-        .hide();
-      $(this)
-        .children('input.edit')
-        .val(currentTodo.text);
-      $(this)
-        .children('span')
-        .show();
-      $(this)
-        .children('button')
-        .show();
-    }
-  }
-
-  // This function constructs a todo-item row
-  function createNewRow(todo) {
-    const $newInputRow = $(
-      [
-        "<li class='list-group-item todo-item'>",
-        '<span>',
-        todo.text,
-        '</span>',
-        "<input type='text' class='edit' style='display: none;'>",
-        "<button class='delete btn btn-danger'>x</button>",
-        "<button class='complete btn btn-primary'>✓</button>",
-        '</li>',
-      ].join('')
-    );
-
-    $newInputRow.find('button.delete').data('id', todo.id);
-    $newInputRow.find('input.edit').css('display', 'none');
-    $newInputRow.data('todo', todo);
-    if (todo.complete) {
-      $newInputRow.find('span').css('text-decoration', 'line-through');
-    }
-    return $newInputRow;
-  }
-
-  // This function inserts a new todo into our database and then updates the view
-  function insertTodo(event) {
-    event.preventDefault();
-    const todo = {
-      text: $newItemInput.val().trim(),
-      complete: false,
-    };
-
-    $.post('/api/todos', todo, getTodos);
-    $newItemInput.val('');
-  }
-});
+}); // End Document ready
