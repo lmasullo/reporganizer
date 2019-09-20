@@ -134,11 +134,16 @@ $(document).ready(function() {
     for (let i = 0; i < tags.length; i++) {
       // console.log(tags[i].tagName);
 
+      // Create the tag buttons
       const btnTag = $('<button>');
       btnTag.addClass('btn btn-sm tag');
+      btnTag.attr('id', tags[i].id);
+      btnTag.attr('data-toggle', 'modal');
+      btnTag.attr('data-target', '#tagModal');
       btnTag.css('background-color', tags[i].tagColor);
       btnTag.text(tags[i].tagName);
 
+      // Create the Repo Tag popover tag buttons
       const popTag = $('<button>');
       popTag.addClass('btn btn-sm popTag');
       popTag.css('background-color', tags[i].tagColor);
@@ -445,7 +450,6 @@ $(document).ready(function() {
     insertTag(repoID, tagID);
   });
 
-  // todo !!!!!!!!!!!!!!!!!!!!!!!!!!!
   // Repo Tag clicked to Delete
   $(document).on('click', '.btnRepoTags', function(e) {
     e.preventDefault();
@@ -469,12 +473,74 @@ $(document).ready(function() {
       // Call getAllRepos to remove the deleted repo tag
       getAllRepos();
     });
+  });
 
-    // // Get the repoID, set when click on Add Tag
-    // console.log(repoID);
+  // Tag clicked, this opens the modal to Update/Delete
+  $(document).on('click', '.tag', function(e) {
+    console.log('Tag Clicked');
+    e.preventDefault();
+    const id = $(this).attr('id');
+    const title = $(this).html();
+    // console.log(id);
 
-    // // Call insertTag to save this tag
-    // insertTag(repoID, tagID);
+    // Update the modal content
+    $('.modal-title').html(`Update/Delete ${title}`);
+
+    // Add the tagID attr to the buttons
+    $('#btnSaveTag').attr('id', id);
+    $('#btnDelTag').attr('id', id);
+  });
+
+  // Save clicked on Tag Modal
+  $(document).on('click', '.btnSave', function(event) {
+    console.log('Tag Save Clicked');
+    const tagName = $('input[name="txtTagName"]')
+      .val()
+      .trim();
+    console.log(tagName);
+
+    const id = $(this).attr('id');
+
+    const objTag = {
+      tagName,
+      id,
+    };
+
+    $.ajax({
+      method: 'PUT',
+      url: '/api/tags',
+      data: objTag,
+    }).then(function(data) {
+      console.log('Data!!!!', data);
+
+      // Close Modal
+      $('#tagModal').modal('hide');
+
+      // Call the function that displays the cards
+      location.reload();
+    });
+  });
+
+  // Delete clicked on Tag Modal
+  $(document).on('click', '.btnDel', function(event) {
+    console.log('Tag Delete Clicked');
+
+    const id = $(this).attr('id');
+
+    $.ajax({
+      method: 'DELETE',
+      url: `/api/tags/${id}`,
+    }).then(function(dbTag) {
+      console.log('Response from delete', dbTag);
+
+      // console.log('Now call Initialize rows');
+      // Call the function to build the cards
+      // initializeRows();
+
+      // Call getAllRepos to remove the deleted repo tag
+      // getAllRepos();
+      location.reload();
+    });
   });
 
   //! **********************************************

@@ -267,6 +267,40 @@ module.exports = function(app) {
     });
   });
 
+  // Update the tag name
+  app.put('/api/tags', function(req, res) {
+    console.log(req.body);
+    // Update takes in an object describing the properties we want to update, and
+    // we use where to describe which objects we want to update
+    db.Tag.update(
+      {
+        tagName: req.body.tagName,
+      },
+      {
+        where: {
+          id: req.body.id,
+        },
+      }
+    ).then(function(dbTag) {
+      res.json(dbTag);
+    });
+  });
+
+  // Delete the tag name
+  app.delete('/api/tags/:id', function(req, res) {
+    // We just have to specify which todo we want to destroy with "where"
+    db.Tag.destroy({
+      where: {
+        id: req.params.id,
+      },
+    }).then(function(dbTag) {
+      res.json(dbTag);
+    });
+
+    // todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // Need to delete all the related tags in repoTags
+  });
+
   //! ******************************************
 
   // POST route for saving a new todo
