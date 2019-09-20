@@ -137,8 +137,6 @@ module.exports = function(app) {
     }
   });
 
-  //! **************************************************
-
   // GET route for getting all of the tags
   app.get('/api/tags', function(req, res) {
     // Count how many tags
@@ -220,7 +218,7 @@ module.exports = function(app) {
     // });
   });
 
-  // POST route for saving a new todo
+  // POST route for saving a new repo tag
   app.post('/api/repotags', function(req, res) {
     // create takes an argument of an object describing the item we want to
     // insert into our table. In this case we just we pass in an object with a text
@@ -240,6 +238,32 @@ module.exports = function(app) {
     }).then(function(dbRepoTag) {
       // We have access to the new todo as an argument inside of the callback function
       res.json(dbRepoTag);
+    });
+  });
+
+  // DELETE route for deleting repos. We can get the id of the todo to be deleted from
+  // req.params.id
+  app.delete('/api/repotags/:id', function(req, res) {
+    // We just have to specify which repo we want to destroy with "where"
+    console.log(req.params.id);
+
+    db.RepoTag.destroy({
+      where: {
+        tagID: req.params.id,
+      },
+    }).then(function(dbRepoTags) {
+      res.json(dbRepoTags);
+    });
+  });
+
+  // POST route for saving a new repo tag
+  app.post('/api/tag', function(req, res) {
+    db.Tag.create({
+      tagName: req.body.tagName,
+      tagColor: req.body.tagColor,
+    }).then(function(dbTag) {
+      // We have access to the new todo as an argument inside of the callback function
+      res.json(dbTag);
     });
   });
 
