@@ -40,7 +40,7 @@ module.exports = function(app) {
             name
             repositories(first: 100) {
               nodes {
-                name, id, url, isPrivate, updatedAt
+                id, name, url, isPrivate, updatedAt
               }
             }
           }
@@ -71,6 +71,15 @@ module.exports = function(app) {
     });
   });
 
+  // GET route for getting all of the repo tags from the db
+  app.get('/api/dbRepoTags', function(req, res) {
+    // findAll returns all entries for a table when used with no options
+    db.RepoTag.findAll({}).then(function(dbRepoTags) {
+      // We have access to the repos as an argument inside of the callback function
+      res.json(dbRepoTags);
+    });
+  });
+
   // POST route for saving the repos from the api to the db
   // app.post('/api/repos', function(req, res) {
   // console.log(req.body.id);
@@ -97,7 +106,7 @@ module.exports = function(app) {
   // });
   // });
 
-  // POST route for saving a new todo
+  // POST route for saving a new repo
   app.post('/api/repos', function(req, res) {
     // create takes an argument of an object describing the item we want to
     // insert into our table. In this case we just we pass in an object with a text
@@ -127,8 +136,6 @@ module.exports = function(app) {
       });
     }
   });
-
-  //! **************************************************
 
   // GET route for getting all of the tags
   app.get('/api/tags', function(req, res) {
@@ -173,25 +180,90 @@ module.exports = function(app) {
   });
 
   // GET route for getting all of the repo tags
-  app.get('/api/repotags', function(req, res) {
+  app.get('/api/repotags/:repoid', function(req, res) {
     // findAll returns all entries for a table when used with no options
-    db.RepoTag.findAll({}).then(function(dbRepoTag) {
+    console.log('repoID Param', req.params.repoid);
+    console.log(typeof req.params.repoid);
+    console.log(req.params.repoid);
+    const paramRepoID = parseInt(req.params.repoid);
+    console.log(paramRepoID);
+
+    db.RepoTag.findAll({
+      where: { repoID: paramRepoID },
+    }).then(function(dbRepoTag) {
       // We have access to the tags as an argument inside of the callback function
       res.json(dbRepoTag);
     });
+    // sequelize
+    //   .query(
+    //     'SELECT * FROM `RepoTags` LEFT JOIN `Tags` on RepoTags.tagID = Tags.id'
+    //   )
+    //   .then(function(results) {
+    //     console.log(results);
+    //     res.json(results);
+    //   });
+    // db.query(
+    //   `
+    //   SELECT
+    //     RepoTags.id,
+    //     RepoTags.tagID
+    //   FROM
+    //     RepoTags
+    //   WHERE
+    //   RepoTags.tagID = Tags.id`,
+    //   { type: sequelize.QueryTypes.SELECT }
+    // ).then(function(results) {
+    //   console.log('Results:', results);
+    //   res.json(results);
+    // });
   });
 
-  // POST route for saving a new todo
+  // POST route for saving a new repo tag
   app.post('/api/repotags', function(req, res) {
     // create takes an argument of an object describing the item we want to
     // insert into our table. In this case we just we pass in an object with a text
     // and complete property
+
+    console.log('RepoID:', req.body.repoID);
+    console.log(typeof req.body.repoID);
+
+    const repoID = parseInt(req.body.repoID);
+
+    console.log(typeof repoID);
+    console.log(repoID);
+
     db.RepoTag.create({
-      repoID: req.body.repoID,
       tagID: req.body.tagID,
+      repoID,
     }).then(function(dbRepoTag) {
       // We have access to the new todo as an argument inside of the callback function
       res.json(dbRepoTag);
+    });
+  });
+
+  // DELETE route for deleting repos. We can get the id of the todo to be deleted from
+  // req.params.id
+  app.delete('/api/repotags/:id', function(req, res) {
+    // We just have to specify which repo we want to destroy with "where"
+    console.log(req.params.id);
+
+    db.RepoTag.destroy({
+      where: {
+        tagID: req.params.id,
+      },
+    }).then(function(dbRepoTags) {
+      res.json(dbRepoTags);
+    });
+  });
+
+  // POST route for saving a new repo tag
+  app.post('/api/tag', function(req, res) {
+    db.Tag.create({
+      tagName: req.body.tagName,
+      tagColor: req.body.tagColor,
+    }).then(function(dbTag) {
+      // We have access to the new todo as an argument inside of the callback function
+      res.json(dbTag);
     });
   });
 
