@@ -35,6 +35,8 @@ $(document).ready(function() {
     for (let i = 0; i < currentRepos.length; i++) {
       // console.log(currentRepos[i]);
 
+      console.log(i);
+
       // Build the card elements
       const divCard = $('<div>');
       divCard.addClass('card');
@@ -44,9 +46,43 @@ $(document).ready(function() {
 
       divCard.css('width', '15rem');
 
+      // Array of images
+      const arrImages = [
+        '../images/bamazon.png',
+        '../images/clicky.png',
+        '../images/friend.png',
+        '../images/beer.png',
+        '../images/puppypicker.png',
+      ];
+
       const cardImg = $('<img>');
       cardImg.addClass('card-img-top');
-      cardImg.attr('src', '../images/react.png');
+
+      if (i < 5) {
+        src = arrImages[0];
+      } else if (i > 5 && i < 10) {
+        src = arrImages[1];
+      } else if (i > 10 && i < 15) {
+        src = arrImages[2];
+      } else if (i > 15 && i < 20) {
+        src = arrImages[3];
+      } else if (i > 20 && i < 35) {
+        src = arrImages[4];
+      }
+
+      // if (i === 1) {
+      //   src = arrImages[0];
+      // } else if (i === 2) {
+      //   src = arrImages[1];
+      // } else if (i === 3) {
+      //   src = arrImages[2];
+      // } else if (i === 4) {
+      //   src = arrImages[3];
+      // } else {
+      //   src = arrImages[4];
+      // }
+
+      cardImg.attr('src', src);
 
       const divCardBody = $('<div>');
 
