@@ -8,8 +8,6 @@ $(document).ready(function() {
   $(document).on('submit', '#todo-form', insertTodo);
 
   //! *************************************
-  // Add Repo tag button, call insertTag
-  // $(document).on('click', '#btnAddRepoTag', openTag);
 
   // The initial repos array
   let currentRepos = [];
@@ -20,8 +18,15 @@ $(document).ready(function() {
   // The initial repo tags array
   let repoTags = [];
 
+  // Initial repoID, used when click on Add Tag, this is the mysql integer id, not the GitHub string id
+  let repoID = 0;
+
   // This function displays repos from the database
   function initializeRows() {
+    console.log('In Initialize Rows');
+
+    console.log('Repo Tags', repoTags);
+
     // Build the card column element
     const cardCol = $('<div>');
     cardCol.addClass('card-columns');
@@ -33,6 +38,10 @@ $(document).ready(function() {
       // Build the card elements
       const divCard = $('<div>');
       divCard.addClass('card');
+
+      // Remove all the elements and then rebuild so we can see the new repotags
+      $('.card').remove();
+
       divCard.css('width', '15rem');
 
       const cardImg = $('<img>');
@@ -40,16 +49,53 @@ $(document).ready(function() {
       cardImg.attr('src', '../images/react.png');
 
       const divCardBody = $('<div>');
+
       divCardBody.addClass('card-body');
 
-      const btnID = `btnAddRepoTag${i}`;
+      const matchingTags = getRepoTags(repoTags, currentRepos[i].id);
+      // console.log('Match', matchingTags);
+      // console.log(matchingTags.length);
+      console.log('Start Building Repo Tags list');
+
+      if (matchingTags.length > 0) {
+        // console.log('Match', matchingTags);
+        // console.log(matchingTags[0].tagName);
+        // console.log('Match', currentRepos[i].id);
+
+        // Remove all the elements and then rebuild so we can see the new repotags
+        // $('.btnRepoTags').remove();
+        // Delete the button from the div
+        // const buttonToDel = $('.btnRepoTags[data-id="3"]');
+        // buttonToDel.remove();
+        // console.log('Btn', buttonToDel);
+
+        for (let i = 0; i < matchingTags.length; i++) {
+          // Now build the div to hold the tags
+          // const divAssocTags = $('<div>');
+
+          const btnAssocTag = $('<button>');
+          btnAssocTag.addClass('btn btn-sm btnRepoTags');
+          btnAssocTag.css('background-color', matchingTags[i].tagColor);
+          btnAssocTag.text(matchingTags[i].tagName);
+          btnAssocTag.attr('data-id', matchingTags[i].id);
+          // divAssocTags.append(btnAssocTag);
+          divCardBody.append(btnAssocTag);
+        }
+        const hr = $('<hr>');
+        divCardBody.append(hr);
+
+        // Delete the button from the div
+        // const buttonToDel = $('.btnRepoTags[data-id="3"]');
+        // console.log('Btn', buttonToDel);
+      }
 
       const cardTags = $('<div>');
-      const btnAddTag = $(
-        `<button id="${btnID}" type="button" class="btn btn-success btn-sm" data-toggle="popover" rel='popover'>Add Tag</button>`
+      const btnAssignTag = $(
+        `<button id="${currentRepos[i].id}" type="button" class="btn btn-success btn-sm btnAssign" rel="popover" title="Add a Tag to ${currentRepos[i].repoName} <a href='#' class='close' data-dismiss='alert'>&times;</a>"
+        >Assign Tag</button>`
       );
 
-      cardTags.append(btnAddTag);
+      cardTags.append(btnAssignTag);
 
       const cardH5 = $('<h5>');
       cardH5.addClass('card-title');
@@ -89,12 +135,36 @@ $(document).ready(function() {
       // console.log(tags[i].tagName);
 
       const btnTag = $('<button>');
-      btnTag.addClass('btn btn-sm');
+      btnTag.addClass('btn btn-sm tag');
       btnTag.css('background-color', tags[i].tagColor);
       btnTag.text(tags[i].tagName);
 
+      const popTag = $('<button>');
+      popTag.addClass('btn btn-sm popTag');
+      popTag.css('background-color', tags[i].tagColor);
+      popTag.attr('id', tags[i].id);
+      popTag.text(tags[i].tagName);
+
+      // Append to the tags div
       $('#tags').append(btnTag);
-    }
+
+      // Append to the popTags div
+      $('#popTags').append(popTag);
+    } // End display tags
+
+    // Pipe ascii
+    const pipe = String.fromCharCode(124);
+
+    // Append pipe after last tag
+    $('#tags').append(pipe);
+
+    // Create Add Tag Button
+    const btnAddTag = $('<button>');
+    btnAddTag.text('Add Tag');
+    btnAddTag.addClass('btn btn-sm btn-success btnAdd');
+
+    // Append Add Tag Button
+    $('#tags').append(btnAddTag);
   }
 
   // Function to map to just the api repo ids
@@ -108,12 +178,6 @@ $(document).ready(function() {
     const dbID = item.repoID;
     return dbID;
   }
-
-  // Function to map to get all the info of the different repos
-  // function getDiffRepos(item) {
-  //   const dbID = item.repoID;
-  //   return dbID;
-  // }
 
   // This function inserts a new repo into our database and then updates the view
   function insertRepo(difference, api) {
@@ -171,10 +235,20 @@ $(document).ready(function() {
       // db repos
       const dbRepoPromise = $.get('/api/dbRepos');
 
+      // repo Tags repos
+      const dbRepoTagsPromise = $.get('/api/dbRepoTags');
+
       // Wait for both to resolve
-      const [api, db] = await Promise.all([repoPromise, dbRepoPromise]);
+      const [api, db, dbRepoTags] = await Promise.all([
+        repoPromise,
+        dbRepoPromise,
+        dbRepoTagsPromise,
+      ]);
       console.log('API:', api);
       console.log('DB:', db);
+      console.log('RepoTags:', dbRepoTags);
+
+      repoTags = dbRepoTags;
 
       // Get just the API repo ids
       const apiIDs = api.map(getJustApiID);
@@ -210,30 +284,90 @@ $(document).ready(function() {
     $.get('/api/tags', function(data) {
       tags = data;
       // console.log(tags);
+
+      // Empty the tag div and then rebuild so we can see the new tags
+      $('#tags').empty();
+
+      // Display the tags on the page
       displayTags();
     });
   }
 
-  // This function grabs all the repo tags
-  function getRepoTags() {
-    $.get('/api/repotags', function(data) {
-      repoTags = data;
-      console.log('Repo Tags', repoTags);
-    });
+  // This function grabs all the repo tags, being called from within initializeRows, #57
+  function getRepoTags(repoTags, repoID) {
+    // console.log('repo ID as a param', repoID);
+
+    // console.log(repoTags);
+    // console.log(repoID);
+
+    // arrFilteredTags = [];
+    let arrFilteredTags = [];
+
+    // console.log(typeof repoID);
+
+    // todo change Repo Tags repoID to integer
+    // strRepoID = toString(repoID);
+
+    // Filter the tags
+    const filteredRepoTags = repoTags.filter(tag => tag.repoID == repoID);
+    // console.log('Filtered Repo Tags', filteredRepoTags);
+
+    // Filter the tags to each repo tag to get the info to display
+    function filterTags(repoTagID) {
+      // Covert to integer
+      const intTagID = parseInt(repoTagID);
+      // console.log('int tag', intTagID);
+
+      // console.log('Tags', tags);
+
+      // Filter the tags
+      const filteredTags = tags.filter(tag => tag.id === intTagID);
+      // console.log('Filtered', filteredTags);
+
+      return filteredTags;
+    }
+
+    // Loop through the repo tags and get the matching tags
+    for (let i = 0; i < filteredRepoTags.length; i++) {
+      // Call the filter function
+      // console.log(repoTags[i].tagID);
+
+      const getFiltered = filterTags(filteredRepoTags[i].tagID);
+      // console.log(getFiltered);
+
+      arrFilteredTags = [...arrFilteredTags, ...getFiltered];
+      // console.log(arrFilteredTags);
+    }
+
+    // console.log('Filtered Tags:', arrFilteredTags);
+    // });
+    // console.log('Filtered Tags2:', arrFilteredTags);
+    return arrFilteredTags;
   }
 
-  // This function inserts a new todo into our database and then updates the view
-  function insertTag(event) {
+  // This function inserts a new tag into our database and then updates the view
+  function insertTag(repoID, tagID) {
     console.log('Add Repo Tag Called');
 
-    event.preventDefault();
+    // event.preventDefault();
     const tag = {
-      repoID: 1,
-      tagID: 1,
+      repoID,
+      tagID,
     };
 
-    $.post('/api/repotags', tag, getAllRepos);
-    // $newItemInput.val('');
+    // Send the tag to route to be inserted
+    $.post('/api/repotags', tag, getAllRepos).then(function(data) {
+      console.log('From Post Repo Tags ', data);
+
+      // Put the response in an array
+      // currentRepos = data;
+
+      // Call the function that displays the cards
+      // initializeRows();
+    });
+
+    // Close the popover
+    $('.popover').hide();
   }
 
   // Call the async/await function to get the repos
@@ -242,23 +376,105 @@ $(document).ready(function() {
   // Call getTags to get tags on load
   getTags();
 
-  // Call getReptTags to get all the repo tags on load
-  getRepoTags();
-
-  $('[data-toggle="popover"]').popover({
-    placement: 'top',
+  // Tag Popover options
+  const popOverSettings = {
+    placement: 'auto',
+    container: 'body',
     html: true,
     selector: '[rel="popover"]',
-    title:
-      'Choose a Tag <a href="#" class="close" data-dismiss="alert">&times;</a>',
-    content() {
-      return '<a id="btnTemplate" class="btn btn-primary btn-sm" href="#" role="button">HTML</a><a id="btnCustom" class="btn btn-primary btn-sm" href="#" role="button">REACT</a>';
-    },
-  });
-  $(document).on('click', '.popover .close', function() {
+    content: $('#popTags'),
+  };
+
+  // Loads the popover options
+  $('body').popover(popOverSettings);
+
+  // Closes the popover when user clicks on the X
+  $(document).on('click', '.popover .close', function(e) {
+    e.preventDefault();
     $(this)
       .parents('.popover')
       .popover('hide');
+  });
+
+  // Assign Tag Button Clicked
+  $(document).on('click', '.btnAssign', function() {
+    console.log('btnAssign clicked');
+    repoID = $(this).attr('id');
+    console.log('Assign Tag Click with repo ID', repoID);
+  });
+
+  // Add Tag Button Clicked
+  $(document).on('click', '.btnAdd', function(e) {
+    console.log('btnAdd clicked');
+    // repoID = $(this).attr('id');
+    e.preventDefault();
+    console.log('Add Tag Click');
+    const tag = prompt('Please enter a new Tag Name');
+    if (tag != null) {
+      console.log(tag);
+
+      const objTag = {
+        tagName: tag.trim(),
+        tagColor: '#00FFFF',
+      };
+
+      // Send value to the post route to add the tag to the db
+      // Send the tag to route to be inserted
+      $.post('/api/tag', objTag).then(function(data) {
+        console.log(data);
+
+        // Call the getTags function to display the new tag
+        getTags();
+      });
+    }
+  });
+
+  // Popover Tag clicked to Assign
+  $(document).on('click', '.popTag', function(e) {
+    e.preventDefault();
+    console.log('Pop Tag clicked');
+
+    // Get the tagID
+    const tagID = $(this).attr('id');
+    console.log(tagID);
+
+    // Get the repoID, set when click on Add Tag
+    console.log(repoID);
+
+    // Call insertTag to save this tag
+    insertTag(repoID, tagID);
+  });
+
+  // todo !!!!!!!!!!!!!!!!!!!!!!!!!!!
+  // Repo Tag clicked to Delete
+  $(document).on('click', '.btnRepoTags', function(e) {
+    e.preventDefault();
+    console.log('Repo Tag clicked');
+    console.log($(this).attr('data-id'));
+
+    // Get the tagID
+    const tagID = $(this).attr('data-id');
+    // console.log(tagID);
+
+    $.ajax({
+      method: 'DELETE',
+      url: `/api/repotags/${tagID}`,
+    }).then(function(dbRepoTags) {
+      console.log('Response from delete', dbRepoTags);
+
+      console.log('Now call Initialize rows');
+      // Call the function to build the cards
+      // initializeRows();
+
+      // Call getAllRepos to remove the deleted repo tag
+      getAllRepos();
+    });
+
+    // // Get the repoID, set when click on Add Tag
+    // console.log(repoID);
+
+    // // Call insertTag to save this tag
+    // insertTag(repoID, tagID);
   });
 
   //! **********************************************
@@ -269,85 +485,7 @@ $(document).ready(function() {
   // Getting todos from database when page loads
   // getTodos();
 
-  // This function resets the todos displayed with new todos from the database
-  function initializeRows() {
-    // $todoContainer.empty();
-    // const rowsToAdd = [];
-    for (let i = 0; i < currentRepos.length; i++) {
-      //   // rowsToAdd.push(createNewRow(todos[i]));
-
-      // <div className="card" style="width: 18rem;">
-      //   <div className="card-body">
-      //     <h5 className="card-title">Card title</h5>
-      //     <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
-      //     <p className="card-text">
-      //       Some quick example text to build on the card title and make up the
-      //       bulk of the card's content.
-      //     </p>
-      //     <a href="#" className="card-link">
-      //       Card link
-      //     </a>
-      //     <a href="#" className="card-link">
-      //       Another link
-      //     </a>
-      //   </div>
-      // </div>;
-
-      //       <div class="card" style="width: 18rem;">
-      //   <img src="..." class="card-img-top" alt="...">
-      //   <div class="card-body">
-      //     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      //   </div>
-      // </div>
-
-      // <div className="card-deck"></div>;
-
-      console.log(currentRepos[i]);
-
-      const cardDeck = $('<div>');
-      cardDeck.addClass('card-deck');
-
-      const divCard = $('<div>');
-      divCard.addClass('card');
-      // divCard.css('width', '18rem');
-
-      const cardImg = $('<img>');
-      cardImg.addClass('card-img-top');
-      cardImg.attr('src', '../images/react.png');
-
-      const divCardBody = $('<div>');
-      divCardBody.addClass('card-body');
-
-      const cardH5 = $('<h5>');
-      cardH5.addClass('card-title');
-      cardH5.html(currentRepos[i].repoName);
-
-      // const cardH6 = $('<h6>');
-      // cardH6.addClass('card-subtitle');
-      // cardH6.html(currentRepos[i].repoPrivate);
-
-      const cardPrivate = $('<p>');
-      cardPrivate.html(currentRepos[i].repoPrivate);
-
-      const cardTime = $('<p>');
-      cardTime.html(currentRepos[i].timestamp);
-
-      const cardLink = $('<a>');
-      cardLink.addClass('btn btn-primary');
-      cardLink.attr('href', currentRepos[i].repoURL);
-      cardLink.attr('target', '_blank');
-      cardLink.text('Go to Repo');
-      cardLink.addClass('link');
-
-      divCardBody.append(cardH5, cardPrivate, cardTime, cardLink);
-      divCard.append(cardImg, divCardBody);
-
-      cardDeck.append(divCard);
-
-      $('#results').append(cardDeck);
-    }
-    // $todoContainer.prepend(rowsToAdd);
-  }
+  //! ********************************************
 
   // This function grabs todos from the database and updates the view
   // function getTodos() {
