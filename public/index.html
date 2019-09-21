@@ -1,89 +1,185 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
-<head>
-<!-- Required meta tags -->
-<meta charset="utf-8" />
-<meta name="viewport"/>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
 
- <!-- Bootstrap CSS  -->
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto Mono"
+      rel="stylesheet"
+    />
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/4.0.0/lumen/bootstrap.min.css" />
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" /> 
-  
-<link rel="stylesheet" href="./styles.css" media="screen" title="no title">
-<link rel="stylesheet" href="css/fonts/stylesheet.css">
+    <!-- Use this style until Joe's index is finished -->
+    <style>
+      .jumbotron {
+        background-color: royalblue;
+        font-family: "Roboto Mono";
+        font-size: 22px;
+      }
 
-<title>RepOrganizer</title>
+      .btn {
+        margin: 5px;
+      }
 
-</head>
+      .hide {
+        display: none;
+      }
 
-<body data-fb-color onload="myFunction()" style="margin:0;">
+      .btnRepoTags:hover {
+        border: black 1px solid;
+      }
 
-  
-<!--//  home-->
-<div class="page__style home">
-  <div class="page__description">
-    <div id="home">
-      <div class="box"> 
-        <h1 class="ml1">
-          <span class="text-wrapper">
-            <span class="letters">REPORGANIZER</span>     
-            <label class="container html">HTML<input type="checkbox"><span class="checkmark">HTML</span></label>
-            <label class="container css">CSS<input type="checkbox"><span class="checkmark">CSS</span></label>
-            <label class="container javascript">Javascript<input type="checkbox"><span class="checkmark">JavaScript</span></label>
-            <label class="container jquery">jQuery<input type="checkbox"><span class="checkmark">jQuery</span></label>
-            <label class="container node">Node<input type="checkbox"><span class="checkmark">node</span></label>
-            <span class="p"><h4> better way to manage your GitHub repos.</h4></span>
-          </span>  
-        </h1>
+      #tags {
+        margin-bottom: 10px;
+      }
+
+      .tag:hover {
+        border: black 1px solid;
+      }
+
+      /* Mobile first  */
+      .card-columns {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+      }
+
+      /* Small devices (portrait tablets and large phones, 600px and up) */
+      @media only screen and (min-width: 600px) {
+        .card-columns {
+          -webkit-column-count: 2;
+          -moz-column-count: 2;
+          column-count: 2;
+        }
+      }
+
+      /* Large devices (laptops/desktops, 992px and up) */
+      @media only screen and (min-width: 992px) {
+        .card-columns {
+          -webkit-column-count: 3;
+          -moz-column-count: 3;
+          column-count: 3;
+        }
+      }
+
+      /* Extra large devices (large laptops and desktops, 1200px and up) */
+      @media only screen and (min-width: 1200px) {
+        .card-columns {
+          -webkit-column-count: 4;
+          -moz-column-count: 4;
+          column-count: 4;
+        }
+      }
+    </style>
+
+    <title>RepOrganizer</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="jumbotron">
+        <h1 class="display-4"><img src="images/tag.png" /> RepOrganizer</h1>
+        <hr class="my-4" />
+        <p>A better way to manage your GitHub repos.</p>
       </div>
-      <div id="loader"></div>
-    </div>
-    <div style= "display:none;" id="myDiv" class="animate-bottom"></div>
-    <div class="card-columns">
-      <div id="tags"></div><div id="results"></div>
-    </div>
-            <!-- The Modal -->
+
+      <!-- Div to display available tags -->
+      <div id="tags"></div>
+
+      <!-- Div to display repo cards -->
+      <div id="results"></div>
+
+      <!-- Div to hold the tags popup -->
+      <div id="popTags"></div>
+
+      <!-- The Modal -->
       <div class="modal" id="tagModal">
         <div class="modal-dialog">
           <div class="modal-content">
-          <!-- Modal Header -->
+            <!-- Modal Header -->
             <div class="modal-header">
               <h4 class="modal-title">Modal Heading</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <button type="button" class="close" data-dismiss="modal">
+                &times;
+              </button>
             </div>
-          <!-- Modal body -->
+
+            <!-- Modal body -->
             <div class="modal-body">
-              <input type="text" id="txtTagName" name="txtTagName" class="form-control" placeholder="Enter New Tag Name"/>
+              <input
+                type="text"
+                id="txtTagName"
+                name="txtTagName"
+                class="form-control"
+                placeholder="Enter New Tag Name"
+              />
             </div>
-          <!-- Modal footer -->
+
+            <!-- Modal footer -->
             <div class="modal-footer">
-              <button id="btnSaveTag" type="button" class="btn btn-success btnSave">Save</button>
-              <button id="btnDelTag" type="button" class="btn btn-danger btnDel">Delete</button>
-              <button id="btnCancelTag" type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+              <button
+                id="btnSaveTag"
+                type="button"
+                class="btn btn-success btnSave"
+              >
+                Save
+              </button>
+              <button
+                id="btnDelTag"
+                type="button"
+                class="btn btn-danger btnDel"
+              >
+                Delete
+              </button>
+              <button
+                id="btnCancelTag"
+                type="button"
+                class="btn btn-warning"
+                data-dismiss="modal"
+              >
+                Cancel
+              </button>
             </div>
           </div>
         </div>
       </div>
-  </div>
-</div>
+    </div>
 
-</body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"
+    ></script>
 
+    <!-- Moment.js for formatting dates -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
-  <!-- Optional JavaScript -->
-  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-<!-- <script src="js/view.js?ver1.0"></script> -->
-<script src="js/view.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
-<script src="js/style.js" type="text/javascript"></script>
-<script src="js/anime-master/lib/anime.min.js"></script>
-</body>
+    <!-- Custom js file -->
+    <script src="js/view.js?ver1.1"></script>
+  </body>
 </html>
-
-

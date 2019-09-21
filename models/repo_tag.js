@@ -5,11 +5,5 @@ module.exports = function(sequelize, DataTypes) {
     repoID: DataTypes.INTEGER,
   });
 
-  // RepoTag.associate = function(models) {
-  //   RepoTag.hasMany(models.Tag, {
-  //     onDelete: 'cascade',
-  //   });
-  // };
-
   return RepoTag;
 };
