@@ -156,12 +156,12 @@ module.exports = function(app) {
       tagID: req.body.tagID,
       repoID,
     }).then(function(dbRepoTag) {
-      // We have access to the new todo as an argument inside of the callback function
+      // We have access to the new Repo Tag as an argument inside of the callback function
       res.json(dbRepoTag);
     });
   });
 
-  // DELETE route for deleting repos. We can get the id of the todo to be deleted from
+  // DELETE route for deleting repos. We can get the id of the repo tag to be deleted from
   // req.params.id
   app.delete('/api/repotags/:id', function(req, res) {
     // We just have to specify which repo we want to destroy with "where"
@@ -182,7 +182,7 @@ module.exports = function(app) {
       tagName: req.body.tagName,
       tagColor: req.body.tagColor,
     }).then(function(dbTag) {
-      // We have access to the new todo as an argument inside of the callback function
+      // We have access to the new tag as an argument inside of the callback function
       res.json(dbTag);
     });
   });
@@ -208,7 +208,7 @@ module.exports = function(app) {
 
   // Delete the tag name
   app.delete('/api/tags/:id', function(req, res) {
-    // We just have to specify which todo we want to destroy with "where"
+    // We just have to specify which tag we want to destroy with "where"
     db.Tag.destroy({
       where: {
         id: req.params.id,
@@ -216,8 +216,5 @@ module.exports = function(app) {
     }).then(function(dbTag) {
       res.json(dbTag);
     });
-
-    // todo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // Need to delete all the related tags in repoTags
   });
 };
