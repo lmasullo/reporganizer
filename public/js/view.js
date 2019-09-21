@@ -369,7 +369,7 @@ $(document).ready(function() {
   };
 
   // Loads the popover options
-  // $('body').popover(popOverSettings);
+  $('body').popover(popOverSettings);
 
   // Closes the popover when user clicks on the X
   $(document).on('click', '.popover .close', function(e) {
