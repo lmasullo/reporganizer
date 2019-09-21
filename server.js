@@ -4,7 +4,10 @@
 // ******************************************************************************
 // *** Dependencies
 // =============================================================
+// Dotenv to store passwords
 require('dotenv').config();
+
+// Use express to work with Node
 const express = require('express');
 
 // Sets up the Express App

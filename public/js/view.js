@@ -19,6 +19,9 @@ $(document).ready(function() {
     const cardCol = $('<div>');
     cardCol.addClass('card-columns');
 
+    // Declare imgI
+    let imgI = 0;
+
     // Loop over the db repos
     for (let i = 0; i < currentRepos.length; i++) {
       // Build the card elements
@@ -50,12 +53,17 @@ $(document).ready(function() {
       const cardImg = $('<img>');
       cardImg.addClass('card-img-top');
 
-      // Random number to pick an image to display
-      const randNum = Math.floor(Math.random() * 10);
+      // Reuse the repo images
+      if (imgI === 10) {
+        imgI = 0;
+      }
 
       // Set the image src
-      const src = arrImages[randNum];
+      const src = arrImages[imgI];
       cardImg.attr('src', src);
+
+      // Increment the integer for the array of repo images
+      imgI += 1;
 
       // Build the card body
       const divCardBody = $('<div>');
@@ -93,10 +101,21 @@ $(document).ready(function() {
       cardH5.html(currentRepos[i].repoName);
 
       const cardPrivate = $('<p>');
-      cardPrivate.html(`Private Repo: ${currentRepos[i].repoPrivate}`);
+      let repoPrivate = '';
+      if (currentRepos[i].repoPrivate === true) {
+        repoPrivate = 'Yes';
+      } else {
+        repoPrivate = 'No';
+      }
+      cardPrivate.html(`Private Repo: ${repoPrivate}`);
+
+      // Format the last edited time
+      const repoDate = moment(currentRepos[i].timestamp).format(
+        'MMMM Do YYYY, h:mm a'
+      );
 
       const cardTime = $('<p>');
-      cardTime.html(`Last Edited: ${currentRepos[i].timestamp}`);
+      cardTime.html(`Last Edited: ${repoDate}`);
 
       const cardLink = $('<a>');
       cardLink.addClass('btn btn-primary');

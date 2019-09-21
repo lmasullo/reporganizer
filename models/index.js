@@ -1,5 +1,8 @@
+// Node File System
 const fs = require('fs');
 const path = require('path');
+
+// Sequelize MySQL db manipulation
 const Sequelize = require('sequelize');
 
 const basename = path.basename(module.filename);
