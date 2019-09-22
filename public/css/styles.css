@@ -7,10 +7,6 @@
   margin: 5px;
 }
 
-.hide {
-  display: none;
-}
-
 .btnRepoTags:hover {
   border: black 1px solid;
 }
@@ -30,6 +26,11 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-evenly;
+}
+
+/* Make the popover content div initially hidden */
+#popTags {
+  visibility: hidden;
 }
 
 /* Mobile First */
