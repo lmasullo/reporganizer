@@ -23,11 +23,14 @@
   border: black 1px solid;
 }
 
-/* Mobile First */
-.card-columns {
-  -webkit-column-count: 1;
-  -moz-column-count: 1;
-  column-count: 1;
+
+/* Centering with flex */
+.card-columns,
+#popTags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 /* Mobile First */
@@ -38,32 +41,8 @@
 
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 768px) {
-  .card-columns {
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
-    column-count: 2;
-  }
-
   #jumboTitle {
     font-size: 52px;
     font-weight: bold;
-  }
-}
-
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
-  .card-columns {
-    -webkit-column-count: 3;
-    -moz-column-count: 3;
-    column-count: 3;
-  }
-}
-
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
-  .card-columns {
-    -webkit-column-count: 4;
-    -moz-column-count: 4;
-    column-count: 4;
   }
 }
