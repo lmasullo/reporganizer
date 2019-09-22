@@ -26,7 +26,6 @@
 
 /* Extra small devices (portrait phones, less than 576px) */
 @media (max-width: 599.98px) {
-  /* Mobile first  */
   .card-columns {
     -webkit-column-count: 1;
     -moz-column-count: 1;
@@ -34,7 +33,7 @@
   }
 
   #jumboTitle {
-    font-size: 30px;
+    font-size: 26px;
     font-weight: bold;
   }
 }
