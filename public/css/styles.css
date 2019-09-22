@@ -1,7 +1,6 @@
 .jumbotron {
   background-color: royalblue;
   font-family: 'Roboto Mono';
-  font-size: 22px;
 }
 
 .btn {
@@ -24,19 +23,30 @@
   border: black 1px solid;
 }
 
-/* Mobile first  */
+/* Mobile First */
 .card-columns {
   -webkit-column-count: 1;
   -moz-column-count: 1;
   column-count: 1;
 }
 
+/* Mobile First */
+#jumboTitle {
+  font-size: 28px;
+  font-weight: bold;
+}
+
 /* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 768px) {
   .card-columns {
     -webkit-column-count: 2;
     -moz-column-count: 2;
     column-count: 2;
+  }
+
+  #jumboTitle {
+    font-size: 52px;
+    font-weight: bold;
   }
 }
 
