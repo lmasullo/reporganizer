@@ -381,6 +381,8 @@ $(document).ready(function() {
 
   // Assign Tag Button Clicked
   $(document).on('click', '.btnAssign', function() {
+    // Makes div with the popover contents visible (initially hidden)
+    $('#popTags').css('visibility', 'visible');
     console.log('btnAssign clicked');
     repoID = $(this).attr('id');
     console.log('Assign Tag Click with repo ID', repoID);
