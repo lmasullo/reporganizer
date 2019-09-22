@@ -11,8 +11,11 @@ $(document).ready(function() {
   // Initial repoID, used when click on Add Tag, this is the mysql integer id, not the GitHub string id
   let repoID = 0;
 
+  // All the db repos
+  let dbRepos = [];
+
   // This function displays repos from the database
-  function initializeRows() {
+  function initializeRows(currentRepos) {
     console.log('In Initialize Rows');
 
     // Build the card column element
@@ -226,7 +229,7 @@ $(document).ready(function() {
       currentRepos = data;
 
       // Call the function that displays the cards
-      initializeRows();
+      initializeRows(currentRepos);
     });
   } // End Insert Repo
 
@@ -256,8 +259,9 @@ $(document).ready(function() {
       console.log('DB:', db);
       console.log('RepoTags:', dbRepoTags);
 
-      // Reassign the array
+      // Reassign the arrays
       repoTags = dbRepoTags;
+      dbRepos = db;
 
       // Get just the API repo ids
       const apiIDs = api.map(getJustApiID);
@@ -278,7 +282,7 @@ $(document).ready(function() {
           currentRepos = data;
           console.log(currentRepos);
 
-          initializeRows();
+          initializeRows(currentRepos);
         });
       }
     } catch (e) {
@@ -509,5 +513,60 @@ $(document).ready(function() {
       // Reload to see the changes
       location.reload();
     });
+  });
+
+  function filterRepos(tagID) {
+    console.log('Inside filterRepos');
+    // console.log(tagID);
+
+    // All the repos
+    console.log(currentRepos);
+
+    // filter the repos to just the ones with the tagID hovered over
+    // First get all the RepoTags with this tagID
+    // console.log(repoTags);
+    const filteredRepoTags = repoTags.filter(tag => tag.tagID === tagID);
+    console.log(filteredRepoTags);
+
+    // Array to hold the filtered repos
+    let filteredRepos = [];
+
+    // Loop over the repoTags
+    for (let i = 0; i < filteredRepoTags.length; i++) {
+      // Filter the current repos array to just the ones that have the assigned tag
+      const getFiltered = currentRepos.filter(
+        repo => repo.id === filteredRepoTags[i].repoID
+      );
+
+      // Use the spread operator to combine arrays
+      filteredRepos = [...filteredRepos, ...getFiltered];
+    }
+
+    console.log(filteredRepos);
+
+    // Now set currentRepos to just the filtered ones
+    currentRepos = filteredRepos;
+
+    // Call initializeRows with the new current repos
+    initializeRows(currentRepos);
+  }
+
+  // Function to filter repos on mouseenter
+  $(document).on('mouseenter', '.tag', function() {
+    // console.log(this.id);
+    const tagID = this.id;
+    // Call filter repos
+    filterRepos(tagID);
+  });
+
+  // Function to show all repos on mouseenter
+  $(document).on('mouseleave', '.tag', function() {
+    // console.log(this.id);
+    // const tagID = this.id;
+    // Call filter repos
+    currentRepos = dbRepos;
+
+    // Call initializeRows with the new current repos
+    initializeRows(currentRepos);
   });
 }); // End Document ready
