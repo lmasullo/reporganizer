@@ -551,6 +551,7 @@ $(document).ready(function() {
     initializeRows(currentRepos);
   }
 
+  // todo Need to consider hover on mobile
   // Function to filter repos on mouseenter
   $(document).on('mouseenter', '.tag', function() {
     // console.log(this.id);
