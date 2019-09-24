@@ -1,4 +1,4 @@
-config.json
+
 # Logs
 logs
 *.log
@@ -63,3 +63,7 @@ typings/
 
 # store
 .store
+
+config 
+
+config.json

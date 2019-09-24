@@ -1,10 +1,22 @@
+body{
+  background-color: black;
+}
+.container{
+  background-color: black;
+}
 .jumbotron {
-  background-color: royalblue;
-  font-family: 'Roboto Mono';
+  background-color: black;
+  font-family: 'conman_regularregular';
+  color: white;
+  height: 200px;
 }
 
 .btn {
   margin: 5px;
+  width: 100px;
+  border-radius: 20px; 
+  font-family: 'conman_regularregular';
+
 }
 
 .btnRepoTags:hover {
