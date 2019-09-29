@@ -180,8 +180,14 @@ $(document).ready(function() {
     btnAddTag.text('Add Tag');
     btnAddTag.addClass('btn btn-sm btn-success btnAdd');
 
-    // Append Add Tag Button
+    // Create Clear Filter Button
+    const btnClearFilter = $('<button>');
+    btnClearFilter.text('Clear Filter');
+    btnClearFilter.addClass('btn btn-sm btn-info clear');
+
+    // Append Add Tag and Clear Filter Buttons
     $('#tags').append(btnAddTag);
+    $('#tags').append(btnClearFilter);
   } // End Display Tags
 
   // Function to map to just the api repo ids
@@ -519,18 +525,34 @@ $(document).ready(function() {
     });
   });
 
+  // Delete clicked on Tag Modal
+  $(document).on('click', '.clear', function() {
+    console.log('Clear Filter');
+    // Reset the currentRepos to all
+    currentRepos = dbRepos;
+
+    // Call initializeRows to reset the view
+    initializeRows(currentRepos);
+  });
+
   function filterRepos(tagID) {
     console.log('Inside filterRepos');
     // console.log(tagID);
+    // console.log('DB Repos', dbRepos);
 
-    // All the repos
-    console.log(currentRepos);
+    // Reset the currentRepos to all
+    currentRepos = dbRepos;
+
+    // Call initializeRows to reset the view
+    initializeRows(currentRepos);
+
+    // console.log('Current', currentRepos);
 
     // filter the repos to just the ones with the tagID hovered over
     // First get all the RepoTags with this tagID
     // console.log(repoTags);
     const filteredRepoTags = repoTags.filter(tag => tag.tagID === tagID);
-    console.log(filteredRepoTags);
+    console.log('Filtered Repo Tags', filteredRepoTags);
 
     // Array to hold the filtered repos
     let filteredRepos = [];
@@ -546,7 +568,7 @@ $(document).ready(function() {
       filteredRepos = [...filteredRepos, ...getFiltered];
     }
 
-    console.log(filteredRepos);
+    console.log('Filtered Repos', filteredRepos);
 
     // Now set currentRepos to just the filtered ones
     currentRepos = filteredRepos;
@@ -562,16 +584,5 @@ $(document).ready(function() {
     const tagID = this.id;
     // Call filter repos
     filterRepos(tagID);
-  });
-
-  // Function to show all repos on mouseenter
-  $(document).on('mouseleave', '.tag', function() {
-    // console.log(this.id);
-    // const tagID = this.id;
-    // Call filter repos
-    currentRepos = dbRepos;
-
-    // Call initializeRows with the new current repos
-    initializeRows(currentRepos);
   });
 }); // End Document ready
