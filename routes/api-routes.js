@@ -22,7 +22,7 @@ module.exports = function(app) {
     axios({
       method: 'post',
       url,
-      // use env
+      // uses .env
       auth: {
         username: process.env.GIT_USERNAME,
         password: process.env.GIT_PASSWORD,
