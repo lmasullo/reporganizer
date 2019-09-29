@@ -18,6 +18,10 @@ $(document).ready(function() {
   function initializeRows(currentRepos) {
     console.log('In Initialize Rows');
 
+    // Lets filter to just public for now, need to make this an option
+    currentRepos = currentRepos.filter(repo => repo.repoPrivate == 0);
+    console.log('currentRepos length', currentRepos.length);
+
     // Build the card column element
     const cardCol = $('<div>');
     cardCol.addClass('card-columns');
